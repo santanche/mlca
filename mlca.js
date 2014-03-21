@@ -28,7 +28,7 @@ Matrix.prototype = {
     map: function(gameFunction) {
         // foreach (cell in Matrix)
         //     newCell = gameFunction(cell.kernel);
-    },
+    }
 };
 
     var WorstMatrix = function(nLines, nCols) {
@@ -65,7 +65,7 @@ Matrix.prototype = {
             }
             
             return newMatrix;
-        },
+        }
     };
     
     WorstMatrix.prototype.Kernel = function(matrix, x, y) {
@@ -83,7 +83,7 @@ Matrix.prototype = {
             { x: 0, y: 1 },
             { x: 1, y: -1 },
             { x: 1, y: 0 },
-            { x: 1, y: 1 },
+            { x: 1, y: 1 }
         ],  
             
         count: function(state) {
@@ -93,7 +93,7 @@ Matrix.prototype = {
                 }
                 return memo;
             }).bind(this), 0);
-        },
+        }
     };
     
     var GoL = function() {
@@ -102,7 +102,7 @@ Matrix.prototype = {
     GoL.prototype = {
         states: {
             dead: 0,
-            live: 1,
+            live: 1
         },
         
         applyRules: function(state, kernel) {
@@ -123,7 +123,7 @@ Matrix.prototype = {
             }
     
             return newState;
-        },
+        }
     };
     
     var Director = function(matrix, game) {
@@ -134,12 +134,13 @@ Matrix.prototype = {
     Director.prototype = {
         tick: function() {
             this.matrix = this.matrix.map(this.game.applyRules.bind(this.game));
-        },
+        }
     };
     
     var printMatrix = function(matrix) {
         console.log("**********************************************************************************************");
-        for (var i = 0; i < matrix.nLines; i++) {
+        var i, p;
+		for (i = 0; i < matrix.nLines; i++) {
             p = "";
             for (var j = 0; j < matrix.nCols; j++) {
                 p += matrix.get(i,j)?"@":"-";
