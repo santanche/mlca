@@ -1,10 +1,10 @@
-/* Automata
+/* Automaton
 
 Interador monolítico: acesso às regras e à Layer Data Structure
 
 */
 
-mlca.automata.iterate = function() {
+mlca.automaton.iterate = function() {
 
 /*	Look at list of layers.
 	For each layer, in order:
@@ -16,13 +16,3 @@ mlca.automata.iterate = function() {
 */
 };
 
-/* 
-
-
-*/
-
-mlca.Layer = function() {
-	// + type (bool, int, etc, etc);
-	// + list of rules (made especially for this layer)
-	// + 
-}
