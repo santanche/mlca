@@ -1,21 +1,17 @@
 ﻿/*
   LayerDataStructure:
-  (atributes)	
   -topology	[Layer's edge rule]
-  +specs		[Dimension]
-  (methods)
+  -dimensions
+  -type
   -constructor(specs) 
   +cell(coordinate, value) [Return a cell value or set a cell value if value is given]
 
-  specs: tamanho, topologia
+  specs: {dimensions, topology, type}
 
 */
 
-mlca.LayerDataStructure = function (specs) {
+mlca.LayerDataStructure = function () {
     'use strict'; 
-    
-    this.dimensions = specs.dimensions; 
-    this.topology = specs.topology;
 };
 
 mlca.LayerDataStructure.prototype = {

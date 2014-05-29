@@ -4,15 +4,17 @@ Interador monolítico: acesso às regras e à Layer Data Structure
 
 */
 
-mlca.automaton.iterate = function() {
+mlca.rulesetList = [];
 
-/*	Look at list of layers.
-	For each layer, in order:
-		Look at layer's list of rules.
-		For each rule, in order:
-			Try to apply.
-			If success, break.
-			Else, try next one.
+mlca.automaton.iterate = function() {
+    var i = 0;
+    for (i = 0; i<mlca.rulesetList.length; i++){
+	
+/*	Look at list of rulesets.
+	For each ruleset, in order:
+	    Look at list of atomic rules.
+	       Try to apply, in order.
+	       If success, break.
+	       Else, try next one.
 */
 };
-
