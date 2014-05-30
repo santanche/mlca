@@ -1,6 +1,6 @@
 ﻿/*
   LayerDataStructure:
-  -topology	[Layer's edge rule]
+  -topology	[Layer's edge rule] ('noloop','xloop','yloop','xyloop')
   -dimensions
   -type
   -constructor(specs) 
@@ -10,15 +10,39 @@
 
 */
 
-mlca.LayerDataStructure = function () {
+mlca.LayerDataStructure = function (specs) {
+    this.dimensions = specs.dimensions;
+    this.topology = specs.topology;
+    this.type = specs.type;
     'use strict'; 
 };
 
 mlca.LayerDataStructure.prototype = {
     dimensions: {x:100, y:100},
-    topology: 'rectangle',
+    topology: 'noloop',
+    isValidCoord: function(coord){
+	if (coord.x >= this.dimensions.x ||
+	    coord.x < 0)
+	    switch (this.topology){
+	    case 'xloop':
+	    case 'xyloop':
+		break;
+	    default:
+		return false;
+	    }
+	if (coord.y >= this.dimensions.y ||
+	    coord.y < 0)
+	    switch (this.topology){
+	    case 'yloop':
+	    case 'xyloop':
+		break;
+	    default:
+		return false;
+	    }
+	return true;
+    },
     topologyHandler: function(coord){
-	var ret;
+	var ret = {};
 	ret.x = coord.x;
 	ret.y = coord.y;
 	if (coord.x >= this.dimensions.x || coord.x < 0){

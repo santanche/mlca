@@ -4,11 +4,6 @@ Interador monolítico: acesso às regras e à Layer Data Structure
 
 */
 
-mlca.rulesetList = [];
-
-mlca.automaton.iterate = function() {
-    var i = 0;
-    for (i = 0; i<mlca.rulesetList.length; i++){
 	
 /*	Look at list of rulesets.
 	For each ruleset, in order:
@@ -17,4 +12,17 @@ mlca.automaton.iterate = function() {
 	       If success, break.
 	       Else, try next one.
 */
+
+
+mlca.rulesetList = [];
+mlca.fieldSize = {x:100,y:100};
+
+mlca.automaton.iterate = function() {
+    var i;
+    var it = {x:0,y:0};
+    for (i = 0; i<mlca.rulesetList.length; i++){
+	for (it.x = 0; it.x<mlca.rulesetList.length; it.x++)
+	    for (it.y = 0; it.y<mlca.rulesetList.length; it.y++){
+		mlca.rulesetList[i].run(it);
+	    }
 };

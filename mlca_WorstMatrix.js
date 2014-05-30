@@ -16,6 +16,7 @@
 			}
 		break;
 	}
+	return this;
 };
 
 mlca.WorstMatrix.prototype = new mlca.LayerDataStructure();
@@ -31,5 +32,5 @@ mlca.WorstMatrix.prototype.setCell = function (coord, newValue) {
 	
 	this.matrix[(coord.y * this.dimensions.x) + coord.x] = newValue;
 	
-	return;
+	return this;
 };

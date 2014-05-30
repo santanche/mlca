@@ -7,16 +7,33 @@
 mlca.Layer = function(specs) {
     /* specs = {
        layerDataStructure: constructor da layerDataStructure desejada
-       ...
+       dimensions,
+       type,
+       topology,
+       layerID,
+       interfaceData
        }
      */
-    this.dataStructRef = new specs.layerDataStructure();
-    this.cell = this.dataStructRef.cell;
+
+    this.id = specs.layerID;
+    this.type = specs.type;
+    this._buffer[0] = new specs.layerDataStructure(specs);
+    this._buffer[1] = new specs.layerDataStructure(specs);
+    this._buffer.current=this.buffer[0];    
+    this._buffer.next=this.buffer[1];
     }
 
 mlca.Layer.prototype = {
-    type,
-    interfaceData,
-    dataStructRef, //Referencia a DataStructure;
-    cell,
+    type : '',
+    id : '',
+    interfaceData = {},
+    buffer[],
+    currentBuffer,
+    read: function(coords){return this._buffer.current.getCell(coords);},
+    write: function(coords, value){return this._buffer.next.setCell(coords, value);},
+    swap: function(){
+	a = this._buffer.next;
+	this._buffer.next = this.buffer.current;
+	this._buffer.current = a;
+    }
 };
