@@ -9,8 +9,12 @@ mlca.Rule = function(specs){
     this.condition = specs.condition;
     this.targetState = specs.targetState;
     this.layerRef = mlca.layerList.getLayerByID(this.layerID);
-    if (this.layerRef === undefined) console.log("Error! LayerID not found!");
-    if (specs.type !== this.layerRef.type) console.log("Error! Incorrect type!");
+
+// This should be in the getLayerByID method
+    // if (this.layerRef === undefined) console.log("Error! LayerID not found!");
+    // if (specs.type !== this.layerRef.type) console.log("Error! Incorrect type!");
+
+
 };
 
 mlca.Rule.prototype = {

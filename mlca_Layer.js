@@ -3,8 +3,6 @@
     // dataStructure
     // Facade p/ layerDataStructure
 
-
-mlca.Layer = function(specs) {
     /* specs = {
        layerDataStructure: constructor da layerDataStructure desejada
        dimensions,
@@ -14,7 +12,8 @@ mlca.Layer = function(specs) {
        interfaceData
        }
      */
-
+ 
+mlca.Layer = function(specs) {
     this.id = specs.layerID;
     this.type = specs.type;
     this._buffer[0] = new specs.layerDataStructure(specs);
