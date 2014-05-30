@@ -18,11 +18,14 @@ mlca.rulesetList = [];
 mlca.fieldSize = {x:100,y:100};
 
 mlca.automaton.iterate = function() {
+	'use strict';
     var i;
     var it = {x:0,y:0};
     for (i = 0; i<mlca.rulesetList.length; i++){
-	for (it.x = 0; it.x<mlca.rulesetList.length; it.x++)
-	    for (it.y = 0; it.y<mlca.rulesetList.length; it.y++){
-		mlca.rulesetList[i].run(it);
-	    }
+		for (it.x = 0; it.x<mlca.fieldSize.x; it.x++){
+			for (it.y = 0; it.y<mlca.fieldSize.y; it.y++){
+			mlca.rulesetList[i].run(it);
+			}
+		}
+	}
 };
