@@ -14,6 +14,7 @@
      */
  
 mlca.Layer = function(specs) {
+    'use strict';
     this.isVisible = true;
     this.id = specs.layerID;
     this.type = specs.type;
@@ -27,9 +28,8 @@ mlca.Layer = function(specs) {
 mlca.Layer.prototype = {
     type : '',
     id : '',
-    interfaceData = {},
-    buffer[],
-    currentBuffer,
+    interfaceData: {},
+    buffer:[],
     read: function(coords){return this._buffer.current.getCell(coords);},
     write: function(coords, value){return this._buffer.next.setCell(coords, value);},
     swap: function(){

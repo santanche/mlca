@@ -78,7 +78,7 @@ mlca.LayerDataStructure.prototype = {
     },
     setCell: function(coord,newValue) {
 	// Dummy method.
-    };
+    }
 };
 /*
 mlca.WorstMatrix = function(){};

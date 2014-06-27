@@ -1,10 +1,12 @@
-specs = {
-   layerID,
-   kernel,
-   number,
-   compOperation,
-}
+//specs = {
+//   layerID,
+//   kernel,
+//   number,
+//   compOperation,
+//}
+//
 
+if (window.mlca === undefined) var mlca = {};
 
 mlca.Condition = function(specs){
     this.targetLayerID = specs.targetLayerID;
@@ -12,15 +14,10 @@ mlca.Condition = function(specs){
     this.number = specs.number;
     this.stateToCount = specs.stateToCount;
     this.compOperation = specs.compOperation;
-    this.layerRef = mlca.layerList.getLayerByID(this.layerID);
+    this.layerRef = mlca.layerList.getLayerByID(this.targetLayerID);
 };
 
 mlca.Condition.prototype = {
-    layerID,
-    layerRef,
-    kernel,
-    number,
-    compOperation,
     count: function(coords){
 	var i,c=0;
 	for (i = 0; i<kernel.relPosList.length; i++){
@@ -49,4 +46,4 @@ mlca.Condition.prototype = {
 	    break;
 	}
     }
-}
+};

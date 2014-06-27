@@ -4,6 +4,8 @@ var ctx;
 var pressed = {};
 var zoomOffput;
 
+if (window.mlca === undefined) var mlca = {};
+
 // FPS update function
 window.requestAnimationFrame = function() {
     return window.requestAnimationFrame ||
@@ -36,7 +38,9 @@ var init = function(){
     
     zoomOffput = 0;
     
-    mlca.automata.begin();
+    
+
+    
     
     // Call update main loop
     mainLoop();

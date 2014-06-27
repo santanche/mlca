@@ -14,7 +14,7 @@
 	Else, try next one.
 */
 
-
+mlca.automaton = {};
 
 mlca.automaton.begin = function(){
     'use strict';
@@ -24,7 +24,7 @@ mlca.automaton.begin = function(){
     mlca.layerList = [];
 
     mlca.kernels.self = new mlca.Kernel({
-	relPosList:[0,0];
+	relPosList:[0,0]
     });
     mlca.kernels.ring8 = new mlca.Kernel({
 	relPosList:[
@@ -38,6 +38,7 @@ mlca.automaton.begin = function(){
 	    {x:-1,y:0},
 	]
     });
+
 
     var GOLLayer = new mlca.Layer(
 	{
@@ -107,17 +108,17 @@ mlca.automaton.begin = function(){
 	}),
     ];
     mlca.rulesets.gol = GOLRuleList;
-    mlca.rulesetList.push(new mlca.Ruleset({ruleList:mlca.rulesets.gol});
-
-    mlca.automaton.iterate = function() {
-	'use strict';
-	var i;
-	var it = {x:0,y:0};
-	for (i = 0; i<mlca.rulesetList.length; i++){
-	    for (it.x = 0; it.x<mlca.fieldSize.x; it.x++){
-		for (it.y = 0; it.y<mlca.fieldSize.y; it.y++){
-		    mlca.rulesetList[i].run(it);
-		}
+    mlca.rulesetList.push(new mlca.Ruleset({ruleList:mlca.rulesets.gol}));
+}
+mlca.automaton.iterate = function() {
+    'use strict';
+    var i;
+    var it = {x:0,y:0};
+    for (i = 0; i<mlca.rulesetList.length; i++){
+	for (it.x = 0; it.x<mlca.fieldSize.x; it.x++){
+	    for (it.y = 0; it.y<mlca.fieldSize.y; it.y++){
+		mlca.rulesetList[i].run(it);
 	    }
 	}
-    };
+    }
+};

@@ -5,6 +5,8 @@
 }
 */
 
+if (window.mlca === undefined) var mlca = {};
+
 mlca.Rule = function(specs){
     this.layerID = specs.layerID;
     this.conditions = specs.conditions;
@@ -19,10 +21,6 @@ mlca.Rule = function(specs){
 };
 
 mlca.Rule.prototype = {
-    layerID: '',
-    layerRef,
-    conditions,
-    targetState,
     apply : function (coords){
 	var i = 0, ret = true;
 	for (i = 0; i<conditions.length; i++){
