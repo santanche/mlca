@@ -10,7 +10,6 @@ var AtomicRule = function(specs){
 		newCell,
 	}
 	*/
-
 	this.kernel 				  = specs.kernel;					// Rule's neighbourhood test
 	this.kernelCellNumber 		  = specs.kernelCellNumber;			// Number of cells in the neighbourhood to test
 	this.kernelComparationType    = specs.kernelComparationType;	// Type of comparation e.g: lessThen, equals, moreThenEquals, etc.
