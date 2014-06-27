@@ -14,12 +14,14 @@
      */
  
 mlca.Layer = function(specs) {
+    this.isVisible = true;
     this.id = specs.layerID;
     this.type = specs.type;
     this._buffer[0] = new specs.layerDataStructure(specs);
     this._buffer[1] = new specs.layerDataStructure(specs);
     this._buffer.current=this.buffer[0];    
     this._buffer.next=this.buffer[1];
+    return this;
     }
 
 mlca.Layer.prototype = {
@@ -34,5 +36,14 @@ mlca.Layer.prototype = {
 	a = this._buffer.next;
 	this._buffer.next = this.buffer.current;
 	this._buffer.current = a;
-    }
+    },
+    initDataStructure: function (dataStructure){
+	this.layerDataStructure = new dataStructure(
+	    {
+		dimensions: this.dimensions,
+		type: this.type,
+		topology: this.topology,
+	    }
+	);
+    },
 };

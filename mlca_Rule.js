@@ -1,12 +1,13 @@
 /* specs = {
    layerID,
-   condition,
+   conditions,
    targetState
 }
 */
+
 mlca.Rule = function(specs){
     this.layerID = specs.layerID;
-    this.condition = specs.condition;
+    this.conditions = specs.conditions;
     this.targetState = specs.targetState;
     this.layerRef = mlca.layerList.getLayerByID(this.layerID);
 
@@ -20,13 +21,16 @@ mlca.Rule = function(specs){
 mlca.Rule.prototype = {
     layerID: '',
     layerRef,
-    condition,
+    conditions,
     targetState,
     apply : function (coords){
-	if (condition.check(coords)){
-	    this.layerRef.write(coords,targetState);
-	    return true;
+	var i = 0, ret = true;
+	for (i = 0; i<conditions.length; i++){
+	    if (!condition[i].check(coords)){
+		ret = false;
+	    }
 	}
+	if (ret) this.layerRef.write(coords,targetState);
 	else return false;
     },
 };

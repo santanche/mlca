@@ -10,10 +10,7 @@
 
 */
 
-mlca.LayerDataStructure = function (specs) {
-    this.dimensions = specs.dimensions;
-    this.topology = specs.topology;
-    this.type = specs.type;
+mlca.LayerDataStructure = function () {
     'use strict'; 
 };
 

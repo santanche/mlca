@@ -1,16 +1,16 @@
-
 specs = {
-    layerID,
-    kernel,
-    number,
-    compOperation,
+   layerID,
+   kernel,
+   number,
+   compOperation,
 }
 
 
 mlca.Condition = function(specs){
-    this.targLayerID = specs.targLayerID;
+    this.targetLayerID = specs.targetLayerID;
     this.kernel = specs.kernel;
     this.number = specs.number;
+    this.stateToCount = specs.stateToCount;
     this.compOperation = specs.compOperation;
     this.layerRef = mlca.layerList.getLayerByID(this.layerID);
 };

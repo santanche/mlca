@@ -7,8 +7,6 @@
 
 */
 
-
-
 mlca.Ruleset = function(specs){
 	'use strict';
     this.ruleList = specs.ruleList;
