@@ -37,8 +37,8 @@ mlca.Layer.prototype = {
 	this._buffer.next = this.buffer.current;
 	this._buffer.current = a;
     },
-    initDataStructure: function (dataStructure){
-	this.layerDataStructure = new dataStructure(
+    initDataStructure: function (DataStructure){
+	this.layerDataStructure = new DataStructure(
 	    {
 		dimensions: this.dimensions,
 		type: this.type,
