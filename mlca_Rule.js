@@ -23,12 +23,12 @@ mlca.Rule = function(specs){
 mlca.Rule.prototype = {
     apply : function (coords){
 	var i = 0, ret = true;
-	for (i = 0; i<conditions.length; i++){
-	    if (!condition[i].check(coords)){
+	for (i = 0; i<this.conditions.length; i++){
+	    if (!(this.conditions[i].check(coords))){
 		ret = false;
 	    }
 	}
-	if (ret) this.layerRef.write(coords,targetState);
+	if (ret) this.layerRef.write(coords,this.targetState);
 	else return false;
     },
 };

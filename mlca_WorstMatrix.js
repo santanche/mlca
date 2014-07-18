@@ -3,8 +3,7 @@
     
     this.dimensions = specs.dimensions;
     this.type = specs.type;
-    this.topology = specs.topology;
-    
+    this.topology = specs.topology;    
     this.matrix = [];
     this.matrix.length = this.dimensions.x * this.dimensions.y;
     

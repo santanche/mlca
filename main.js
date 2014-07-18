@@ -43,6 +43,7 @@ var init = function(){
     
     
     // Call update main loop
+    mlca.automaton.begin();
     mainLoop();
 }
 

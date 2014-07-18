@@ -1,4 +1,3 @@
-
 /* Automaton
 
    Interador monolítico: acesso às regras e à Layer Data Structure
@@ -18,10 +17,23 @@ mlca.automaton = {};
 
 mlca.automaton.begin = function(){
     'use strict';
-
+    console.log("automaton.begin()");
     mlca.rulesetList = [];
     mlca.fieldSize = {x:100,y:100};
     mlca.layerList = [];
+    mlca.layerList.getLayerByID = function(layerID){
+	for (var i = 0; i < this.length; i++){
+	    if (this[i].id === layerID){
+		console.log("Found reference to " + layerID);
+		return this[i];
+	    }
+	}
+    };
+
+    mlca.kernels = {};
+    mlca.rulesets = {};
+    mlca.layers = {};
+    mlca.conditions = {};
 
     mlca.kernels.self = new mlca.Kernel({
 	relPosList:[0,0]
@@ -40,12 +52,13 @@ mlca.automaton.begin = function(){
     });
 
 
-    var GOLLayer = new mlca.Layer(
+    mlca.layers.gol = new mlca.Layer(
 	{
 	    dimensions: mlca.fieldSize,
 	    type: 'boolean',
 	    topology: 'noloop',
 	    layerID: 'main',
+	    DataStructure:mlca.WorstMatrix,
 	    interfaceData:{
 		stateRepresentation: function (state){
 		    var ret;
@@ -60,17 +73,16 @@ mlca.automaton.begin = function(){
 		}// end stateRepresentation
 	    }// end interfaceData
 	}// end specs
-    ).initDataStructure(mlca.WorstMatrix);
-    mlca.layers.gol = GOLLayer;
+    );
     mlca.layerList.push(mlca.layers.gol);
-
+ 
     var GOLRuleList = [
 	new mlca.Rule({
 	    layerID:'main',
 	    targetState:false,
 	    conditions:[
 		new mlca.Condition({
-		    targetLayerId:'main',
+		    targetLayerID:'main',
 		    kernel:mlca.kernels.ring8,
 		    stateToCount:true,
 		    number: 5,
@@ -82,7 +94,7 @@ mlca.automaton.begin = function(){
 	    targetState:false,
 	    conditions: [
 		new mlca.Condition({
-		    targetLayerId:'main',
+		    targetLayerID:'main',
 		    kernel:mlca.kernels.ring8,
 		    stateToCount:true,
 		    number: 2,
@@ -94,7 +106,7 @@ mlca.automaton.begin = function(){
 	    targetState:true,
 	    conditions: [
 		new mlca.Condition({
-		    targetLayerId:'main',
+		    targetLayerID:'main',
 		    kernel:mlca.kernels.self,
 		    stateToCount:true,
 		    number: 1,

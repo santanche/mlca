@@ -9,7 +9,6 @@
 	<title> MLCA Canvas Prototype </title>
 	<head> 
 		<script type="text/javascript" src="mlca_protointerface.js"></script>
-		<script type="text/javascript" src="mlca_automaton.js"></script>
 		<script type="text/javascript" src="mlca_Condition.js"></script>
 		<script type="text/javascript" src="mlca_Kernel.js"></script>
 		<script type="text/javascript" src="mlca_LayerDataStructure.js"></script>
@@ -17,11 +16,12 @@
 		<script type="text/javascript" src="mlca_Rule.js"></script>
 		<script type="text/javascript" src="mlca_Ruleset.js"></script>
 		<script type="text/javascript" src="mlca_WorstMatrix.js"></script>
+		<script type="text/javascript" src="mlca_automaton.js"></script>
 		<script type="text/javascript" src="main.js"></script>
 	</head>
 	<body onLoad = "init()">
 		<canvas id="canvas" width="500" height="500"></canvas>
-		<button id="iterate" onclick="mlca.automata.iterate()">Iterate!</button>
+		<button id="iterate" onclick="mlca.automaton.iterate()">Iterate!</button>
 	</body>
 
 </html>
