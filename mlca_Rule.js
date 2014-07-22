@@ -26,11 +26,15 @@ mlca.Rule.prototype = {
 	for (i = 0; i<this.conditions.length; i++){
 	    if (!(this.conditions[i].check(coords))){
 		ret = false;
+		break;
 	    }
 	}
-	if (this.layerRef == undefined)
-	    this.layerRef = mlca.layerList.getLayerByID(this.layerID);
-	if (ret) this.layerRef.write(coords,this.targetState);
+	if (ret){
+	    if (this.layerRef == undefined)
+		this.layerRef = mlca.layerList.getLayerByID(this.layerID);
+	    this.layerRef.write(coords,this.targetState);
+	    return true;
+	}
 	else return false;
     },
 };

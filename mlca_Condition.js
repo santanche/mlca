@@ -12,7 +12,7 @@ mlca.Condition = function(specs){
     this.targetLayerID = specs.targetLayerID;
     this.kernel = specs.kernel;
     this.number = specs.number;
-    this.stateToCount = specs.stateToCount;
+    this.state = specs.stateToCount;
     this.compOperation = specs.compOperation;
     console.log("Condition fetching reference to " + this.targetLayerID);
     this.layerRef = mlca.layerList.getLayerByID(this.targetLayerID);

@@ -11,6 +11,7 @@
        layerID,
        interfaceData
        name
+       topology
        }
      */
  
@@ -21,6 +22,7 @@ mlca.Layer = function(specs) {
     this.id = specs.layerID;
     this.type = specs.type;
     this.name = specs.name;
+    this.topology = specs.topology;
     this.interfaceData = specs.interfaceData;
     this.initDataStructure(specs.DataStructure);
     console.log(this.name + "'s data structure initialized");

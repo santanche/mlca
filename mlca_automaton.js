@@ -22,7 +22,8 @@ mlca.automaton.begin = function(){
     //Initializations
     
     mlca.rulesetList = [];
-    mlca.fieldSize = {x:20,y:20};
+    mlca.fieldSize = {x:50,y:50};
+    this.play = false;
 
     mlca.layerList = [];
     mlca.layerList.getLayerByID = function(layerID){
@@ -38,7 +39,7 @@ mlca.automaton.begin = function(){
 
     mlca.kernels = {
 	self : new mlca.Kernel({
-	    relPosList:[0,0]
+	    relPosList:[{x:0,y:0}]
 	}),
 	ring8 : new mlca.Kernel({
 	    relPosList:[
@@ -64,7 +65,7 @@ mlca.automaton.begin = function(){
 			targetLayerID:'main',
 			kernel:mlca.kernels.ring8,
 			stateToCount:true,
-			number: 5,
+			number: 4,
 			compOperation: '>=',
 		    })]
 	    }),
@@ -76,8 +77,8 @@ mlca.automaton.begin = function(){
 			targetLayerID:'main',
 			kernel:mlca.kernels.ring8,
 			stateToCount:true,
-			number: 2,
-			compOperation: '<=',
+			number: 1,
+			compOperation: '==',
 		    })]
 	    }),
 	    new mlca.Rule({
@@ -87,15 +88,17 @@ mlca.automaton.begin = function(){
 		    new mlca.Condition({
 			targetLayerID:'main',
 			kernel:mlca.kernels.self,
-			stateToCount:true,
+			stateToCount:false,
 			number: 1,
 			compOperation: '==',
+		    }),
+		    new mlca.Condition({
+			targetLayerID:'main',
+			kernel:mlca.kernels.ring8,
+			stateToCount:true,
+			number: 3,
+			compOperation: '==',
 		    })]
-	    }),
-	    new mlca.Rule({
-		layerID:'main',
-		targetState:false,
-		conditions: []
 	    })
 	],
     };
@@ -106,7 +109,7 @@ mlca.automaton.begin = function(){
 		name:'gol',
 		dimensions: mlca.fieldSize,
 		type: 'boolean',
-		topology: 'noloop',
+		topology: 'xyloop',
 		layerID: 'main',
 		DataStructure:mlca.WorstMatrix,
 		interfaceData:{
@@ -131,13 +134,16 @@ mlca.automaton.begin = function(){
 
     mlca.layerList.push(mlca.layers.gol);
     mlca.layer
-    mlca.rulesetList.push(new mlca.Ruleset({ruleList:mlca.rulesets.gol}));
+    mlca.rulesetList.push(new mlca.Ruleset({
+	ruleList:mlca.rulesets.gol,
+	layerID:'main'
+    }));
     var displayInfo = {
 	cellSize: 10,
 	dimensions: mlca.fieldSize
     };
     //R-Pentamino :D
-    mlca.layerList[0].readFromString('1\n\n\n000011\n00011\n00001',
+    mlca.layerList[0].readFromString('101\n011\n01',
 				     function(n){
 					 switch (n){
 					 case '1':
@@ -180,4 +186,5 @@ mlca.automaton.iterate = function() {
 
     //Draw Layers
     this.draw();
+    if (this.play)window.setTimeout(this.iterate(),500)
 };

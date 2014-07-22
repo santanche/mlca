@@ -27,14 +27,19 @@ mlca.WorstMatrix.prototype = new mlca.LayerDataStructure();
 
 mlca.WorstMatrix.prototype.getCell = function (coord) {
     'use strict';
-    
-    return this.matrix[(coord.y * this.dimensions.x) + coord.x];
+    var c = this.topologyHandler(coord);
+    if (this.isValidCoord(c)){
+	return this.matrix[(c.y * this.dimensions.x) + c.x];
+    }
+    else return undefined;
 };
 
 mlca.WorstMatrix.prototype.setCell = function (coord, newValue) {
     'use strict';
-    
-    this.matrix[(coord.y * this.dimensions.x) + coord.x] = newValue;
-    
-    return this;
+    var c = this.topologyHandler(coord);
+    if (this.isValidCoord(c)){
+	this.matrix[(c.y * this.dimensions.x) + c.x] = newValue;
+	return true;
+    }
+    return false;
 };

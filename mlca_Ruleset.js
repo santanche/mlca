@@ -10,6 +10,8 @@
 mlca.Ruleset = function(specs){
 	'use strict';
     this.ruleList = specs.ruleList;
+    this.layerID = specs.layerID;
+    this.layerRef = mlca.layerList.getLayerByID(this.layerID);
 };
 
 mlca.Ruleset.prototype = {
@@ -22,6 +24,12 @@ mlca.Ruleset.prototype = {
 		ret = true; 
 		break;
 	    }
+	}
+	if (ret == false){
+	    if (this.layerRef == undefined){
+		this.layerRef = mlca.layerList.getLayerByID(this.layerID);
+	    }
+	    this.layerRef.write(coords,this.layerRef.read(coords));
 	}
 	return ret;
     }
