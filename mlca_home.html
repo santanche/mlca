@@ -1,0 +1,23 @@
+<html>
+  <style>
+  </style>
+  <title> MLCA Canvas Prototype </title>
+  <head> 
+    <script type="text/javascript" src="mlca_Condition.js"></script>
+    <script type="text/javascript" src="mlca_Kernel.js"></script>
+    <script type="text/javascript" src="mlca_LayerDataStructure.js"></script>
+    <script type="text/javascript" src="mlca_Layer.js"></script>
+    <script type="text/javascript" src="mlca_Rule.js"></script>
+    <script type="text/javascript" src="mlca_Ruleset.js"></script>
+    <script type="text/javascript" src="mlca_WorstMatrix.js"></script>
+    <script type="text/javascript" src="mlca_automaton.js"></script>
+    <script type="text/javascript" src="mlca_IDisplay.js"></script>
+    <script type="text/javascript" src="mlca_SimpleCanvasDisplay.js"></script>
+  </head>
+  <body onLoad="mlca.automaton.begin()">
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <br>
+    <button id="iterate" onClick="mlca.automaton.iterate()">Iterate!</button>
+  </body>
+
+</html>

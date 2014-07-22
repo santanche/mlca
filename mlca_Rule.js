@@ -28,6 +28,8 @@ mlca.Rule.prototype = {
 		ret = false;
 	    }
 	}
+	if (this.layerRef == undefined)
+	    this.layerRef = mlca.layerList.getLayerByID(this.layerID);
 	if (ret) this.layerRef.write(coords,this.targetState);
 	else return false;
     },

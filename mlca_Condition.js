@@ -21,6 +21,8 @@ mlca.Condition = function(specs){
 mlca.Condition.prototype = {
     count: function(coords){
 	var i,c=0;
+	if (this.layerRef == undefined)
+	    this.layerRef = mlca.layerList.getLayerByID(this.targetLayerID);
 	for (i = 0; i<this.kernel.relPosList.length; i++){
 	    if (this.layerRef.read(this.kernel.getAbsCoords(coords,i))===this.state)c ++;
 	};
