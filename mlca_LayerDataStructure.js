@@ -18,8 +18,10 @@ mlca.LayerDataStructure.prototype = {
     dimensions: {x:100, y:100},
     topology: 'noloop',
     isValidCoord: function(coord){
+	'use strict';
+	
 	if (coord.x >= this.dimensions.x ||
-	    coord.x < 0)
+	    coord.x < 0){
 	    switch (this.topology){
 	    case 'xloop':
 	    case 'xyloop':
@@ -27,8 +29,9 @@ mlca.LayerDataStructure.prototype = {
 	    default:
 		return false;
 	    }
+	}
 	if (coord.y >= this.dimensions.y ||
-	    coord.y < 0)
+	    coord.y < 0){
 	    switch (this.topology){
 	    case 'yloop':
 	    case 'xyloop':
@@ -36,9 +39,12 @@ mlca.LayerDataStructure.prototype = {
 	    default:
 		return false;
 	    }
+	}	
 	return true;
     },
     topologyHandler: function(coord){
+	'use strict';
+	
 	var ret = {};
 	ret.x = coord.x;
 	ret.y = coord.y;
@@ -47,7 +53,7 @@ mlca.LayerDataStructure.prototype = {
 	    case 'xloop':
 	    case 'xyloop':
 		ret.x = ret.x%this.dimensions.x;
-		if (ret.x<0) ret.x += this.dimensions.x;
+		if (ret.x<0) {ret.x += this.dimensions.x;}
 		break;
 	    }
 	}
@@ -56,13 +62,15 @@ mlca.LayerDataStructure.prototype = {
 	    case 'yloop':
 	    case 'xyloop':
 		ret.y = ret.y%this.dimensions.y;
-		if (ret.x<0) ret.y += this.dimensions.y;
+		if (ret.x<0) {ret.y += this.dimensions.y;}
 		break;
 	    }
 	}
 	return ret;
     },
     cell: function() {
+	'use strict';
+	
 	var ret = -1;
 	var coords = this.topologyHandler(arguments[0]);
 	if (arguments.length === 1) {

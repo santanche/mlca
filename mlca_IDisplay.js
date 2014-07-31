@@ -4,8 +4,9 @@ mlca.IDisplay = function(specs){
 
 mlca.IDisplay.prototype = {
     init:function(){
-	
+		'use strict';
     },
     drawLayer:function(layer){
-    }
-}
+		'use strict';
+	}
+};

@@ -10,12 +10,12 @@
     var i = 0;	// initialize the matrix
     var init;
     switch (this.type) {
-    case 'boolean':
-	init = false;
-	break;
-    case 'integer':
-    default:
-	init = 0;
+		case 'boolean':
+			init = false;
+		break;
+		case 'integer':
+		default:
+			init = 0;
     }
     for (i = 0; i < this.matrix.length; i += 1) {
 	this.matrix[i] = init;
@@ -29,9 +29,11 @@ mlca.WorstMatrix.prototype.getCell = function (coord) {
     'use strict';
     var c = this.topologyHandler(coord);
     if (this.isValidCoord(c)){
-	return this.matrix[(c.y * this.dimensions.x) + c.x];
+		return this.matrix[(c.y * this.dimensions.x) + c.x];
     }
-    else return undefined;
+    else {
+		return undefined;
+	}
 };
 
 mlca.WorstMatrix.prototype.setCell = function (coord, newValue) {

@@ -6,6 +6,8 @@ var zoomOffput;
 
 // FPS update function
 window.requestAnimationFrame = function() {
+	'use strict';
+	
 	return window.requestAnimationFrame ||
 		window.webkitRequestAnimationFrame ||
 		window.mozRequestAnimationFrame ||
@@ -13,7 +15,7 @@ window.requestAnimationFrame = function() {
 		window.oRequestAnimationFrame || 
 		function(f) {
 			window.setTimeout(f,1e3/60);
-		}
+		};
 }();
 
 // Pressed thingy

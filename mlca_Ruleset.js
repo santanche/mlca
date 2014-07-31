@@ -19,14 +19,14 @@ mlca.Ruleset.prototype = {
     run: function(coords){
 	'use strict';
 	var i, ret = false;
-	for(i = 0; i< this.ruleList.length; i++){
+	for(i = 0; i< this.ruleList.length; i+=1){
 	    if (this.ruleList[i].apply(coords)){
 		ret = true; 
 		break;
 	    }
 	}
-	if (ret == false){
-	    if (this.layerRef == undefined){
+	if (ret === false){
+	    if (this.layerRef === undefined){
 		this.layerRef = mlca.layerList.getLayerByID(this.layerID);
 	    }
 	    this.layerRef.write(coords,this.layerRef.read(coords));

@@ -1,13 +1,17 @@
 
 mlca.Kernel = function(specs){
-    this.relPosList = specs.relPosList;
+    'use strict';
+	
+	this.relPosList = specs.relPosList;
 };
 
 mlca.Kernel.prototype = {
     getAbsCoords: function (coords, i){
+	'use strict';
+	
 	return {
 	    x: coords.x + this.relPosList[i].x,
-	    y: coords.y + this.relPosList[i].y,
-	}
+	    y: coords.y + this.relPosList[i].y
+	};
     }
 };

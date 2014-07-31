@@ -1,7 +1,11 @@
-if (mlca === undefined) var mlca = {};
+if (mlca === undefined) {
+	var mlca = {};
+}
 
 mlca.protointerface = function() {
-    // Offset of moving screen
+    'use strict';
+	
+	// Offset of moving screen
     this.offsetX = 0;
     this.offsetY = 0;
     // Zoom level, cell width and height
@@ -14,16 +18,20 @@ mlca.protointerface = function() {
     // Matrix size
     this.matrixSizeX = 0;
     this.matrixSizeY = 0;
-}
+};
 
 mlca.protointerface.prototype = {
     refresh:		function(){
+	'use strict';
+	
 	this.matrixSizeX = mlca.layerList[0].dimensions.x;
 	this.matrixSizeY = mlca.layerList[0].dimensions.y;
 	this.panScreen(0);
     },
     
     setZoomUp:		function(){
+	'use strict';
+	
 	if(this.zoomLevel < 5){
 	    this.zoomLevel += 1;
 	    this.cellWidth = this.zoomLevel*16;
@@ -33,31 +41,39 @@ mlca.protointerface.prototype = {
     },
     
     drawFrame:		function(){
-	for(var i = 0; i < (canvas.width/this.cellWidth)+1 ; i++){
-	    var aux = -this.offsetX + i*this.cellWidth;
+	'use strict';
+	
+	var i, aux;
+	
+	for(i = 0; i < (canvas.width/this.cellWidth)+1 ; i+=1){
+	    aux = -this.offsetX + i*this.cellWidth;
 	    if(this.screenCenterX + aux >= 0 && this.screenCenterX + aux < (this.matrixSizeX+1)*this.cellWidth){
 		ctx.beginPath();
 		var y0 = 0;
 		var y1 = canvas.height;
-		if(this.screenCenterY < 0)
-		    y0 = 0-this.screenCenterY;
-		if(this.screenCenterY + canvas.height >= this.matrixSizeY*this.cellHeight)
-		    y1 = (this.matrixSizeY)*this.cellHeight - this.screenCenterY + 0;
+		if(this.screenCenterY < 0){
+		    y0 = -this.screenCenterY;
+		}
+		if(this.screenCenterY + canvas.height >= this.matrixSizeY*this.cellHeight){
+		    y1 = (this.matrixSizeY)*this.cellHeight - this.screenCenterY;
+		}	
 		ctx.moveTo(aux,y0);
 		ctx.lineTo(aux,y1);
 		ctx.stroke();
 	    }
 	}
-	for(var i = 0; i < (canvas.height/this.cellHeight)+1; i++){
-	    var aux = -this.offsetY + i*this.cellHeight;
+	for(i = 0; i < (canvas.height/this.cellHeight)+1; i+=1){
+	    aux = -this.offsetY + i*this.cellHeight;
 	    if(this.screenCenterY + aux >= 0 && this.screenCenterY + aux < (this.matrixSizeY+1)*this.cellHeight){
 		ctx.beginPath();
 		var x0 = 0;
 		var x1 = canvas.width;
-		if(this.screenCenterX < 0)
-		    x0 = -this.screenCenterX + 0 ;
-		if(this.screenCenterX + canvas.width >= this.matrixSizeX*this.cellWidth)
-		    x1 = (this.matrixSizeX)*this.cellWidth - this.screenCenterX + 0;
+		if(this.screenCenterX < 0){
+		    x0 = -this.screenCenterX;
+		}
+		if(this.screenCenterX + canvas.width >= this.matrixSizeX*this.cellWidth){
+		    x1 = (this.matrixSizeX)*this.cellWidth - this.screenCenterX;
+		}
 		ctx.moveTo(x0,aux);
 		ctx.lineTo(x1,aux);
 		ctx.stroke();
@@ -66,10 +82,13 @@ mlca.protointerface.prototype = {
     },
     
     draw:			function(){
+	'use strict';
+	
+	var i,j;
 	var xo = Math.floor(this.screenCenterX/this.cellWidth);
 	var yo = Math.floor(this.screenCenterY/this.cellHeight);
-	for(var i = 0; i < (canvas.width/this.cellWidth)+1 ; i++){
-	    for(var j = 0; j < (canvas.height/this.cellHeight)+1 ; j++){
+	for(i = 0; i < (canvas.width/this.cellWidth)+1 ; i+=1){
+	    for(j = 0; j < (canvas.height/this.cellHeight)+1 ; j+=1){
 		var x = xo + i;
 		var y = yo + j;
 		// Fazer buffer
@@ -82,8 +101,11 @@ mlca.protointerface.prototype = {
     },
     
     setColor:		function(x,y){
+	'use strict';
+	
+	var i;
 	var cellColor = 0;
-	for(var i = 0; i < mlca.layerList.length; i++){
+	for(i = 0; i < mlca.layerList.length; i+=1){
 	    if(mlca.layerList[i].visible === true){
 		cellColor = mlca.layerList[i].interfaceData.stateRepresentation(mlca.Layer.read({x:x,y:y}));
 	    }
@@ -92,6 +114,8 @@ mlca.protointerface.prototype = {
     },
     
     panScreen:		function(e){
+	'use strict';
+	
 	if (e === "up"){
 	    //if(this.screenCenterY > 0)
 	    this.screenCenterY -= 4;
@@ -114,5 +138,5 @@ mlca.protointerface.prototype = {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	this.drawFrame();
 	this.draw();
-    },
-}
+    }
+};

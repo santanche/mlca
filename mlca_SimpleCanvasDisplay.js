@@ -9,26 +9,33 @@ mlca.SimpleCanvasDisplay = function(specs){
 
 mlca.SimpleCanvasDisplay.prototype = new mlca.IDisplay();
 mlca.SimpleCanvasDisplay.prototype.drawGrid = function(){
-    /*specs:cellSize, dimensions*/
+    'use strict';
+	
+	var i;
+	/*specs:cellSize, dimensions*/
     this.ctx.strokeStyle = 'grey';
     this.ctx.lineWidth = 1;
     this.ctx.beginPath();
-    for (var i = 1; i <= this.canvas.height; i += this.specs.cellSize){
+    for (i = 1; i <= this.canvas.height; i += this.specs.cellSize){
 	this.ctx.moveTo(1,i);
 	this.ctx.lineTo(this.canvas.height,i);
-    };
-    for (var i = 1; i <= this.canvas.width; i += this.specs.cellSize){
+    }
+    for (i = 1; i <= this.canvas.width; i += this.specs.cellSize){
 	this.ctx.moveTo(i,1);
 	this.ctx.lineTo(i,this.canvas.width);
-    };
+    }
     this.ctx.stroke();
 };
 mlca.SimpleCanvasDisplay.prototype.drawLayer = function(layer){
-    if (layer.isVisible == false) return;
-    var it = {x:0,y:0};
+    'use strict';
+	
+	if (layer.isVisible === false) {
+		return;
+    }
+	var it = {x:0,y:0};
     var color;
-    for (it.x = 0; it.x < layer.dimensions.x; it.x++){
-	for (it.y = 0; it.y < layer.dimensions.y; it.y++){
+    for (it.x = 0; it.x < layer.dimensions.x; it.x+=1){
+	for (it.y = 0; it.y < layer.dimensions.y; it.y+=1){
 	    color = layer.interfaceData.stateRepresentation(layer.read(it));
 	    if (color){
 		this.ctx.fillStyle = color;
@@ -41,6 +48,10 @@ mlca.SimpleCanvasDisplay.prototype.drawLayer = function(layer){
     }
 };
 mlca.SimpleCanvasDisplay.prototype.drawBackground = function(color){
-    this.ctx.fillStyle = color?color:'white';
-    this.ctx.fillRect(1,1,this.canvas.width,this.canvas.height);    
+    'use strict';
+	
+	if (color === undefined){
+		color = 'white';
+    }
+	this.ctx.fillRect(1,1,this.canvas.width,this.canvas.height);    
 };
