@@ -21,12 +21,29 @@ mlca.automaton.begin = function(){
     mlca.rulesetList = [];
     mlca.fieldSize = {x:50,y:50};
     this.play = false;
+    this.fps = 10;
 
+    (function(){
+	var curr = (new Date()).getTime();
+	var last = 0;
+	var elaps = 0;
+	mlca.mainloop = function(){
+	    last = curr;
+	    curr = (new Date()).getTime();
+	    elaps += curr - last;
+	    if (elaps > 1000/mlca.automaton.fps){
+		elaps = (curr - last)%(1000/mlca.automaton.fps);
+		if (mlca.automaton.play){
+		    mlca.automaton.iterate();
+		}
+	    }
+	    requestAnimationFrame(mlca.mainloop);
+	};
+    })();
     mlca.layerList = [];
     mlca.layerList.getLayerByID = function(layerID){
 	for ( i = 0; i < this.length; i += 1){
 	    if (this[i].id === layerID){
-		console.log("Found reference to " + layerID);
 		return this[i];
 	    }
 	}
@@ -140,7 +157,7 @@ mlca.automaton.begin = function(){
 	dimensions: mlca.fieldSize
     };
     //R-Pentamino :D
-    mlca.layerList[0].readFromString('101\n011\n01',
+    mlca.layerList[0].readFromString('\n\n\n\n000011\n00011\n00001',
 				     function(n){
 					 switch (n){
 					 case '1':
@@ -148,11 +165,14 @@ mlca.automaton.begin = function(){
 					 default:
 					     return false;
 					 }
-				     }
+				     },
+				     {x:20,y:20}
 				    );
-    console.debug(mlca.layerList);
     this.display = new mlca.SimpleCanvasDisplay(displayInfo);
     this.draw();
+
+    mlca.mainloop();
+
 };
 
 mlca.automaton.draw = function(){
@@ -183,7 +203,6 @@ mlca.automaton.iterate = function() {
 
     // Execute Rulesets
     for (i = 0; i<mlca.rulesetList.length; i+= 1){
-	console.log('Running Ruleset ' + i);
 	for (it.x = 0; it.x<mlca.fieldSize.x; it.x += 1){
 	    for (it.y = 0; it.y<mlca.fieldSize.y; it.y += 1){
 		mlca.rulesetList[i].run(it);
@@ -198,7 +217,4 @@ mlca.automaton.iterate = function() {
 
     //Draw Layers
     this.draw();
-    if (this.play) {
-		window.setTimeout(this.iterate(),500);
-	}
 };

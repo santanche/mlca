@@ -62,7 +62,7 @@ mlca.LayerDataStructure.prototype = {
 	    case 'yloop':
 	    case 'xyloop':
 		ret.y = ret.y%this.dimensions.y;
-		if (ret.x<0) {ret.y += this.dimensions.y;}
+		if (ret.y<0) {ret.y += this.dimensions.y;}
 		break;
 	    }
 	}

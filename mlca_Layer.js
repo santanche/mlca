@@ -65,9 +65,12 @@ mlca.Layer.prototype = {
 	    );
 	}//end for
     },
-    readFromString: function (string,func){
+    readFromString: function (string,func,offset){
 	'use strict';
 	console.log('Reading from string:');
+	if (offset === undefined){
+	    offset = {x:0,y:0};
+	}
 	console.log(string);
 	var i;
 	var it = {x:0, y:0};
@@ -85,7 +88,7 @@ mlca.Layer.prototype = {
 	    }
 	    if (it.y >= this.dimensions.y) {return;}
 	    console.log('Writing ' + string.charAt(i) + ' at ' + it.x + ',' + it.y);
-	    this.write(it,func(string.charAt(i)));
+	    this.write({x:it.x+offset.x,y:it.y+offset.y},func(string.charAt(i)));
 	    it.x+=1;
 	}
 	this.swap();
