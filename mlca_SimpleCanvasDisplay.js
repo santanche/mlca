@@ -18,11 +18,11 @@ mlca.SimpleCanvasDisplay.prototype.drawGrid = function(){
     this.ctx.beginPath();
     for (i = 1; i <= this.canvas.height; i += this.specs.cellSize){
 	this.ctx.moveTo(1,i);
-	this.ctx.lineTo(this.canvas.height,i);
+	this.ctx.lineTo(this.canvas.width,i);
     }
     for (i = 1; i <= this.canvas.width; i += this.specs.cellSize){
 	this.ctx.moveTo(i,1);
-	this.ctx.lineTo(i,this.canvas.width);
+	this.ctx.lineTo(i,this.canvas.height);
     }
     this.ctx.stroke();
 };
@@ -49,7 +49,8 @@ mlca.SimpleCanvasDisplay.prototype.drawLayer = function(layer){
 };
 mlca.SimpleCanvasDisplay.prototype.drawBackground = function(color){
     'use strict';
-	
+    this.canvas.width = this.specs.cellSize * this.specs.dimensions.x + 1;
+    this.canvas.height = this.specs.cellSize * this.specs.dimensions.y + 1;  
 	if (color === undefined){
 		color = 'white';
     }

@@ -19,9 +19,14 @@ mlca.automaton.begin = function(){
     //Initializations
 	var i;
     mlca.rulesetList = [];
-    mlca.fieldSize = {x:50,y:50};
+    if (mlca.fieldSize === undefined) mlca.fieldSize = {x:30,y:30};
     this.play = false;
-    this.fps = 10;
+    if(this.fps === undefined) this.fps = 10;
+    if(this.cellSize === undefined) this.cellSize = 10;
+    if (!this.displayInfo) this.displayInfo = {
+		cellSize: this.cellSize,
+		dimensions: mlca.fieldSize
+    };
 
     (function(){
 	var curr = (new Date()).getTime();
@@ -152,10 +157,7 @@ mlca.automaton.begin = function(){
 	ruleList:mlca.rulesets.gol,
 	layerID:'main'
     }));
-    var displayInfo = {
-	cellSize: 10,
-	dimensions: mlca.fieldSize
-    };
+
     //R-Pentamino :D
     mlca.layerList[0].readFromString('\n\n\n\n000011\n00011\n00001',
 				     function(n){
@@ -168,7 +170,7 @@ mlca.automaton.begin = function(){
 				     },
 				     {x:20,y:20}
 				    );
-    this.display = new mlca.SimpleCanvasDisplay(displayInfo);
+    this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);
     this.draw();
 
     mlca.mainloop();
@@ -186,15 +188,6 @@ mlca.automaton.draw = function(){
     this.display.drawGrid();
 };
 //DEBUG
-mlca.automaton.run = function() {
-	'use strict';
-	
-	mlca.automaton.iterate();
-	mlca.automaton.iterate();
-	mlca.automaton.iterate();
-	mlca.automaton.iterate();
-	mlca.automaton.iterate();	
-};
 
 mlca.automaton.iterate = function() {
     'use strict';
