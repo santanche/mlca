@@ -1,13 +1,6 @@
 /* Automaton
 
-    Interador monolítico: acesso às regras e à Layer Data Structure
-	
-    Look at list of rulesets.
-	For each ruleset, in order:
-	Look at list of atomic rules.
-	Try to apply, in order.
-	If success, break.
-	Else, try next one.
+   Monolithic iterator: access to all modules
 */
 
 mlca.automaton = {};
@@ -16,9 +9,22 @@ mlca.automaton.begin = function(){
     'use strict';
     console.log("automaton.begin()");
 
-    //Initializations
-	var i;
+    //Initializations:
+    /*
+      i: index for 'for'
+      mlca.rulesetList: Array with rulesets to be applied
+     */
+
+    var i;
     mlca.rulesetList = [];
+
+    /*Temp implementation for the SimpleCanvasDisplay
+
+      this.play: Boolean to control auto-iterator
+      this.fps: Maximum animation frames per second
+      this.cellSize: size for the grid cells
+    */
+
     if (mlca.fieldSize === undefined) mlca.fieldSize = {x:30,y:30};
     this.play = false;
     if(this.fps === undefined) this.fps = 10;
@@ -27,6 +33,10 @@ mlca.automaton.begin = function(){
 		cellSize: this.cellSize,
 		dimensions: mlca.fieldSize
     };
+
+    // End of temp implementation
+
+    // mlca.mainloop: Main loop. Calculates elapsed time since last frame
 
     (function(){
 	var curr = (new Date()).getTime();
@@ -45,6 +55,9 @@ mlca.automaton.begin = function(){
 	    requestAnimationFrame(mlca.mainloop);
 	};
     })();
+
+    // mlca.layerList: array with layers
+    
     mlca.layerList = [];
     mlca.layerList.getLayerByID = function(layerID){
 	for ( i = 0; i < this.length; i += 1){
@@ -73,6 +86,10 @@ mlca.automaton.begin = function(){
 	})
     };
     
+    // Rules: They state the conditions for cell change and the target state.
+    // TODO: implement stateToCount as a range of states (for countable data types),
+    // and relative targetStates.
+
     mlca.rulesets = {
 	gol:[
 	    new mlca.Rule({
@@ -96,7 +113,7 @@ mlca.automaton.begin = function(){
 			kernel:mlca.kernels.ring8,
 			stateToCount:true,
 			number: 1,
-			compOperation: '=='
+			compOperation: '<='
 		    })]
 	    }),
 	    new mlca.Rule({
@@ -122,29 +139,28 @@ mlca.automaton.begin = function(){
     };
     
     mlca.layers = {
-	gol : new mlca.Layer(
-	    {
-		name:'gol',
-		dimensions: mlca.fieldSize,
-		type: 'boolean',
-		topology: 'xyloop',
-		layerID: 'main',
-		DataStructure:mlca.WorstMatrix,
-		interfaceData:{
-		    stateRepresentation: function (state){
-			var ret;
-			switch (state){
-			case true:
-			    ret = '#000000';
-			    break;
-			default:
-			    ret = 'white';
-			}
-			return ret;
-		    }// end stateRepresentation
-		}// end interfaceData
-	    }// end specs
-	)	
+	gol :
+	{
+	    name:'gol',
+	    dimensions: mlca.fieldSize,
+	    type: 'boolean',
+	    topology: 'xyloop',
+	    layerID: 'main',
+	    DataStructure:mlca.WorstMatrix,
+	    interfaceData:{
+		stateRepresentation: function (state){
+		    var ret;
+		    switch (state){
+		    case true:
+			ret = '#000000';
+			break;
+		    default:
+			ret = 'white';
+		    }
+		    return ret;
+		}// end stateRepresentation
+	    }// end interfaceData
+	}// end specs
     };
     mlca.conditions = {};
         
@@ -152,7 +168,7 @@ mlca.automaton.begin = function(){
 	
 	//linha com apenas "mlca.layer" removida, averiguar a intenção inicial 
 	
-    mlca.layerList.push(mlca.layers.gol);
+    mlca.layerList.push(new mlca.Layer(mlca.layers.gol));
     mlca.rulesetList.push(new mlca.Ruleset({
 	ruleList:mlca.rulesets.gol,
 	layerID:'main'
@@ -168,7 +184,7 @@ mlca.automaton.begin = function(){
 					     return false;
 					 }
 				     },
-				     {x:20,y:20}
+				     {x:10,y:10}
 				    );
     this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);
     this.draw();
