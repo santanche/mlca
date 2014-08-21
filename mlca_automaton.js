@@ -33,6 +33,7 @@ mlca.automaton.begin = function(){
 		cellSize: this.cellSize,
 		dimensions: mlca.fieldSize
     };
+    this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);    
 
     // End of temp implementation
 
@@ -90,20 +91,8 @@ mlca.automaton.begin = function(){
     // TODO: implement stateToCount as a range of states (for countable data types),
     // and relative targetStates.
 
-    mlca.rulesets = {
+    mlca.rulelists = {
 	gol:[
-	    new mlca.Rule({
-		layerID:'main',
-		targetState:false,
-		conditions:[
-		    new mlca.Condition({
-			targetLayerID:'main',
-			kernel:mlca.kernels.ring8,
-			stateToCount:true,
-			number: 4,
-			compOperation: '>='
-		    })]
-	    }),
 	    new mlca.Rule({
 		layerID:'main',
 		targetState:false,
@@ -114,6 +103,18 @@ mlca.automaton.begin = function(){
 			stateToCount:true,
 			number: 1,
 			compOperation: '<='
+		    })]
+	    }),
+	    new mlca.Rule({
+		layerID:'main',
+		targetState:false,
+		conditions:[
+		    new mlca.Condition({
+			targetLayerID:'main',
+			kernel:mlca.kernels.ring8,
+			stateToCount:true,
+			number: 4,
+			compOperation: '>='
 		    })]
 	    }),
 	    new mlca.Rule({
@@ -165,17 +166,17 @@ mlca.automaton.begin = function(){
     mlca.conditions = {};
         
     // Prototype
-	
-	//linha com apenas "mlca.layer" removida, averiguar a intenção inicial 
-	
+    
+    //Initializations (will be done through the interface later)
+    
     mlca.layerList.push(new mlca.Layer(mlca.layers.gol));
     mlca.rulesetList.push(new mlca.Ruleset({
-	ruleList:mlca.rulesets.gol,
+	ruleList:mlca.rulelists.gol,
 	layerID:'main'
     }));
 
     //R-Pentamino :D
-    mlca.layerList[0].readFromString('\n\n\n\n000011\n00011\n00001',
+    mlca.layerList[0].readFromString('011\n11\n010',
 				     function(n){
 					 switch (n){
 					 case '1':
@@ -186,17 +187,17 @@ mlca.automaton.begin = function(){
 				     },
 				     {x:10,y:10}
 				    );
-    this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);
+    //End prototype
+
     this.draw();
-
     mlca.mainloop();
-
 };
+
+//Draw: Draws background, then layers (from bottom to top), then grid.
 
 mlca.automaton.draw = function(){
     'use strict';
 	var i;
-	
 	this.display.drawBackground();
 	for (i = 0; i<mlca.layerList.length; i += 1){
 		this.display.drawLayer(mlca.layerList[i]);
