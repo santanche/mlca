@@ -17,6 +17,15 @@ mlca.LayerDataStructure = function () {
 mlca.LayerDataStructure.prototype = {
     dimensions: {x:100, y:100},
     topology: 'noloop',
+    clear: function(state){
+	console.log('clear');
+	var it = {x:0,y:0};
+	for (it.x = 0;it.x < this.dimensions.x;it.x++){
+	    for (it.y = 0;it.y < this.dimensions.y;it.y++){
+		this.setCell(it,state);
+	    }	    
+	}
+    },
     isValidCoord: function(coord){
 	'use strict';
 	

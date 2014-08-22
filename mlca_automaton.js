@@ -30,10 +30,11 @@ mlca.automaton.begin = function(){
     if(this.fps === undefined) this.fps = 10;
     if(this.cellSize === undefined) this.cellSize = 10;
     if (!this.displayInfo) this.displayInfo = {
-		cellSize: this.cellSize,
-		dimensions: mlca.fieldSize
+	cellSize: this.cellSize,
+	dimensions: mlca.fieldSize
     };
-    this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);    
+    // Fix p/ multiplos event listeners
+    if (!this.display) this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);    
 
     // End of temp implementation
 
@@ -148,7 +149,11 @@ mlca.automaton.begin = function(){
 	    topology: 'xyloop',
 	    layerID: 'main',
 	    DataStructure:mlca.WorstMatrix,
+	    defaultState:false,
 	    interfaceData:{
+		stateAlternate: function (state){
+		    return !state;
+		},
 		stateRepresentation: function (state){
 		    var ret;
 		    switch (state){

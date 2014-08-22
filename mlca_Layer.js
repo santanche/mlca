@@ -23,6 +23,7 @@ mlca.Layer = function(specs) {
     this.type = specs.type;
     this.name = specs.name;
     this.topology = specs.topology;
+    this.defaultState = specs.defaultState;
     this.interfaceData = specs.interfaceData;
     this.initDataStructure(specs.DataStructure);
     console.log(this.name + "'s data structure initialized");
@@ -36,12 +37,32 @@ mlca.Layer.prototype = {
     id : '',
     interfaceData: {},
     buffer:[],
+    clear: function(state){
+	if (state===undefined){
+	    if (this.defaultState!==undefined){
+		state = this.defaultState;
+	    }
+	    else {return false};
+	}
+	console.log(state);
+	this.buffer.next.clear(state);
+	this.buffer.current.clear(state);
+    },
     read: function(coords){
-		'use strict';
-		return this.buffer.current.getCell(coords);},
-    write: function(coords, value){
-		'use strict';
-		return this.buffer.next.setCell(coords, value);},
+	'use strict';
+	return this.buffer.current.getCell(coords);
+    },
+    write: function(coords, value, dontSwap){
+	'use strict';
+	var matrix;
+	if (dontSwap === true){
+	    matrix = this.buffer.current;
+	}
+	else {
+	    matrix = this.buffer.next;
+	}
+	return matrix.setCell(coords, value);
+    },
     swap: function(){
 	'use strict';
 	

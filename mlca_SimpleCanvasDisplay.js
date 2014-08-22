@@ -1,10 +1,35 @@
 mlca.SimpleCanvasDisplay = function(specs){
     'use strict';
     this.canvas = document.getElementById("canvas");
+    var canvas = this.canvas;
+    var selectedCell = {x:0,y:0};
+    var selectedLayer;
     this.ctx = this.canvas.getContext('2d');
     this.specs = specs;
     this.canvas.width = specs.cellSize * specs.dimensions.x + 1;
-    this.canvas.height = specs.cellSize * specs.dimensions.y + 1;    
+    this.canvas.height = specs.cellSize * specs.dimensions.y + 1;
+    this.canvas.mouse = {x:0,y:0};
+    var onClick = function(e){
+	mlca.automaton.play = false;
+	selectedCell.x = Math.floor((e.pageX - canvas.offsetLeft -2)/specs.cellSize); 
+	selectedCell.y = Math.floor((e.pageY - canvas.offsetTop -2)/specs.cellSize); 
+	//Placeholder
+	
+	if (selectedLayer === undefined) selectedLayer = mlca.layerList[0];
+
+	selectedLayer.write(
+	    selectedCell,
+	    selectedLayer.interfaceData.stateAlternate(
+		selectedLayer.read(selectedCell)
+	    ),
+	    true);
+
+	// End placeholder
+	mlca.automaton.draw();
+
+	console.log(selectedCell);
+    }
+    this.canvas.addEventListener('click',onClick);
 };
 
 mlca.SimpleCanvasDisplay.prototype = new mlca.IDisplay();
@@ -56,3 +81,4 @@ mlca.SimpleCanvasDisplay.prototype.drawBackground = function(color){
     }
 	this.ctx.fillRect(1,1,this.canvas.width,this.canvas.height);    
 };
+
