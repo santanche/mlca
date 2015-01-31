@@ -9,17 +9,19 @@ mlca.automaton.begin = function(){
     'use strict';
     console.log("automaton.begin()");
 
-    //Initializations:
     /*
+	  Initializations:
+    
       i: index for 'for'
       mlca.rulesetList: Array with rulesets to be applied
-     */
+    */
 
     var i;
     mlca.rulesetList = [];
 
-    /*Temp implementation for the SimpleCanvasDisplay
-
+    /*
+	  Temp implementation for the SimpleCanvasDisplay
+	
       this.play: Boolean to control auto-iterator
       this.fps: Maximum animation frames per second
       this.cellSize: size for the grid cells
@@ -30,17 +32,18 @@ mlca.automaton.begin = function(){
     if(this.fps === undefined) this.fps = 10;
     if(this.cellSize === undefined) this.cellSize = 10;
     if (!this.displayInfo) this.displayInfo = {
-	cellSize: this.cellSize,
-	dimensions: mlca.fieldSize
+		cellSize: this.cellSize,
+		dimensions: mlca.fieldSize
     };
-    // Fix p/ multiplos event listeners
-    if (!this.display) this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);    
+    this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);    
 
-    // End of temp implementation
-
-    // mlca.mainloop: Main loop. Calculates elapsed time since last frame
-
-    (function(){
+	//End of temp implementation
+	
+    /*
+	  mlca.mainloop: Main loop. Calculates elapsed time since last frame
+	*/
+    
+	(function(){
 	var curr = (new Date()).getTime();
 	var last = 0;
 	var elaps = 0;
@@ -58,8 +61,10 @@ mlca.automaton.begin = function(){
 	};
     })();
 
-    // mlca.layerList: array with layers
-    
+    /*
+	  mlca.layerList: array with layers
+    */
+	
     mlca.layerList = [];
     mlca.layerList.getLayerByID = function(layerID){
 	for ( i = 0; i < this.length; i += 1){
@@ -69,8 +74,11 @@ mlca.automaton.begin = function(){
 	}
     };
     
-    //Libraries (possibly to be moved)
-    mlca.kernels = {
+    /*
+	  Libraries (possibly to be moved)
+    */
+	
+	mlca.kernels = {
 	self : new mlca.Kernel({
 	    relPosList:[{x:0,y:0}]
 	}),
@@ -88,10 +96,12 @@ mlca.automaton.begin = function(){
 	})
     };
     
-    // Rules: They state the conditions for cell change and the target state.
-    // TODO: implement stateToCount as a range of states (for countable data types),
-    // and relative targetStates.
-
+    /*
+	  Rules: They state the conditions for cell change and the target state.
+	  TODO: implement stateToCount as a range of states (for countable data types),
+      and relative targetStates.
+	*/
+	
     mlca.rulelists = {
 	gol:[
 	    new mlca.Rule({
@@ -149,11 +159,7 @@ mlca.automaton.begin = function(){
 	    topology: 'xyloop',
 	    layerID: 'main',
 	    DataStructure:mlca.WorstMatrix,
-	    defaultState:false,
 	    interfaceData:{
-		stateAlternate: function (state){
-		    return !state;
-		},
 		stateRepresentation: function (state){
 		    var ret;
 		    switch (state){
@@ -170,10 +176,13 @@ mlca.automaton.begin = function(){
     };
     mlca.conditions = {};
         
-    // Prototype
     
-    //Initializations (will be done through the interface later)
+	//Interface prototype
     
+	/*
+	  Initializations (will be done through the interface later)
+    */
+	
     mlca.layerList.push(new mlca.Layer(mlca.layers.gol));
     mlca.rulesetList.push(new mlca.Ruleset({
 	ruleList:mlca.rulelists.gol,
@@ -192,13 +201,16 @@ mlca.automaton.begin = function(){
 				     },
 				     {x:10,y:10}
 				    );
-    //End prototype
-
+    //End Interface prototype
+	
+	
     this.draw();
     mlca.mainloop();
 };
 
-//Draw: Draws background, then layers (from bottom to top), then grid.
+/*
+  Draw: Draws background, then layers (from bottom to top), then grid.
+*/
 
 mlca.automaton.draw = function(){
     'use strict';
