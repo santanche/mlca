@@ -1,3 +1,9 @@
+/*
+	IDisplay
+	
+	To be defined
+*/
+
 mlca.IDisplay = function(specs){
     'use strict';
 };

@@ -1,6 +1,13 @@
 /* Automaton
 
    Monolithic iterator: access to all modules
+	
+	+begin: initiate the ruleset list, most display parameters, the main loop
+	the list of layers, the neighborhood libraries and predefined rules and layers
+	
+	-draw: draws the cells into the canvas, followed by the grid
+	
+	-iterate: compute the next state of all layers
 */
 
 mlca.automaton = {};
@@ -35,7 +42,8 @@ mlca.automaton.begin = function(){
 		cellSize: this.cellSize,
 		dimensions: mlca.fieldSize
     };
-    this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);    
+    // Fix p/ multiplos event listeners
+    if (!this.display) this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);   
 
 	//End of temp implementation
 	
@@ -156,10 +164,14 @@ mlca.automaton.begin = function(){
 	    name:'gol',
 	    dimensions: mlca.fieldSize,
 	    type: 'boolean',
-	    topology: 'xyloop',
+	   	    topology: 'xyloop',
 	    layerID: 'main',
 	    DataStructure:mlca.WorstMatrix,
+	    defaultState:false,
 	    interfaceData:{
+		stateAlternate: function (state){
+		    return !state;
+		},
 		stateRepresentation: function (state){
 		    var ret;
 		    switch (state){

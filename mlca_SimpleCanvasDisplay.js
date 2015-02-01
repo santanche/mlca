@@ -1,3 +1,28 @@
+/*
+	IDisplay SimpleCanvasDisplay: initial implementation of the canvas display
+	
+	-canvas: holds Html5 canvas used for drawing on the page
+	-selectedCell: coordinate of the cell clicked by the user
+	-selectedLayer: layer selected by the user
+	-ctx: holds reference to Html5 canvas 2d context, used for drawing on the canvas
+	
+	specs{
+		cellSize
+		dimension
+	}
+	
+	-onClick(e): event handled by the HTML onClick, alternate the state of the cell clicked by the user.
+	
+	+drawGrid(): draws a simple grid according to the canvas dimensions and the specified cell size.
+	
+	-drawLayer(layer): if the layer.isVisible parameter is set to true, draws the cells 
+	according to the interfaceData parameters of the layer
+	
+	-drawBackground(color): color the canvas background with a given color, if none is given, the color is
+	set to white.
+	
+*/
+
 mlca.SimpleCanvasDisplay = function(specs){
     'use strict';
     this.canvas = document.getElementById("canvas");
@@ -37,7 +62,6 @@ mlca.SimpleCanvasDisplay.prototype.drawGrid = function(){
     'use strict';
 	
 	var i;
-	/*specs:cellSize, dimensions*/
     this.ctx.strokeStyle = 'grey';
     this.ctx.lineWidth = 1;
     this.ctx.beginPath();

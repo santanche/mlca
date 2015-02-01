@@ -1,4 +1,12 @@
-﻿mlca.WorstMatrix = function (specs) {
+﻿/*
+	LayedDataStructure WorstMatrix: Simple matrix using the regular array from javascript, may store either integers or booleans.
+	
+	-type: the type of data it stores (integers or booleans)
+	-matrix: javascript array for storing the states
+	
+*/
+
+mlca.WorstMatrix = function (specs) {
     'use strict';
     
     this.dimensions = specs.dimensions;

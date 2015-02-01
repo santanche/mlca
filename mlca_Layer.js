@@ -1,19 +1,40 @@
-// _type (bool, int, etc, etc);
-    // interfaceData (contém funcs estado->representação)
-    // dataStructure
-    // Facade p/ layerDataStructure
+/* Layer: contain the layer characteristics
 
-    /* specs = {
-       DataStructure: constructor da layerDataStructure desejada
-       dimensions,
-       type,
-       topology,
-       layerID,
-       interfaceData
-       name
-       topology
-       }
-     */
+	-type: contain the inner representation of the states (bool, int, etc);
+   -id: layer identifier
+	-interfaceData: contain the graphic representation for each state
+   -dataStructure: contain the way states are stored (int matrix, bit map, etc)
+	-buffer: stores the data of the current and the next configuration of states of the layer
+   
+   specs = {
+		DataStructure: constructor da layerDataStructure desejada
+      dimensions,
+      type,
+      topology,
+		defaultState,
+      layerID,
+      interfaceData
+      name
+   }
+	
+	+clear(state): set all cells in the current and next step buffer to the state in parameter, 
+	if none is given, search for the default state, if there isn't any, returns false.
+	
+	+read(coords): return the state of the current cell given by the coords parameter.
+	
+	+write(coords, value, dontSwap): writes the value passed to the cell given by the coords parameter, 
+	if dontSwap is true, writes to the current cell, else writes to the next step cell. returns if the
+	cell writing was successful.
+	
+	+swap(): swap the current buffer with the next step one.
+	
+	-initDataStructure(DataStructure): assign the data structure given by parameter to the buffers, 
+	the layerDataStructure parameters are taken from the layer object.
+	
+	+readFromString(string,func,offset): reads a string and assign the states given by the chars to the cells 
+	starting at a certain offset, from left to right. '\n' indicates a line break, which means the next cell to
+	be assigned is on a line below the current.
+*/
  
 mlca.Layer = function(specs) {
     'use strict';
@@ -23,7 +44,7 @@ mlca.Layer = function(specs) {
     this.type = specs.type;
     this.name = specs.name;
     this.topology = specs.topology;
-    this.defaultState = specs.defaultState;
+	 this.defaultState = specs.defaultState;
     this.interfaceData = specs.interfaceData;
     this.initDataStructure(specs.DataStructure);
     console.log(this.name + "'s data structure initialized");
@@ -37,7 +58,7 @@ mlca.Layer.prototype = {
     id : '',
     interfaceData: {},
     buffer:[],
-    clear: function(state){
+	 clear: function(state){
 	if (state===undefined){
 	    if (this.defaultState!==undefined){
 		state = this.defaultState;

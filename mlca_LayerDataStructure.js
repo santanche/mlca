@@ -1,13 +1,28 @@
 ﻿/*
   LayerDataStructure:
-  -topology	[Layer's edge rule] ('noloop','xloop','yloop','xyloop')
+  
+  -topology: Layer's edge rule ('noloop','xloop','yloop','xyloop')
   -dimensions
-  -type
-  -constructor(specs) 
-  +cell(coordinate, value) [Return a cell value or set a cell value if value is given]
 
-  specs: {dimensions, topology, type}
+  specs: {
+		dimensions, 
+		topology, 
+		type
+  }
+  
+  +clear(state): set all cells to the state given by parameters.
+  
+  -isValidCoord(coord): check if the coordinate given is within the layed dimension or is
+  validated by the topology, if so, returns true, else returns false.
+  
+  -topologyHandler(coord): ajust the coordinate values given, if greater than the dimension or negative, 
+  according to the layer topology
+  
+  +cell(coordinate, value): Return a cell value or set a cell value if value is given
 
+  -getCell(coord): Dummy method, must be overwritten by the children according to its dataStructure.
+	
+  -setCell(coord,newValue): Dummy method, must be overwritten by the children according to its dataStructure. 
 */
 
 mlca.LayerDataStructure = function () {
@@ -17,7 +32,7 @@ mlca.LayerDataStructure = function () {
 mlca.LayerDataStructure.prototype = {
     dimensions: {x:100, y:100},
     topology: 'noloop',
-    clear: function(state){
+	 clear: function(state){
 	console.log('clear');
 	var it = {x:0,y:0};
 	for (it.x = 0;it.x < this.dimensions.x;it.x++){
@@ -97,9 +112,3 @@ mlca.LayerDataStructure.prototype = {
 	// Dummy method.
     }
 };
-/*
-mlca.WorstMatrix = function(){};
-mlca.WorstMatrix.prototype = new mlca.LayerDataStructure();
-
-new mlca.WorstMatrix();
-*/

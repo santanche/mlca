@@ -1,3 +1,7 @@
+/*
+	Currently unused!
+*/
+
 if (mlca === undefined) {
 	var mlca = {};
 }

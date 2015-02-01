@@ -1,9 +1,18 @@
-/*specs = {
+/*
+   Condition
+   
+   specs = {
    layerID,
    kernel,
    number,
-   compOperation,
-}
+   compOperation
+   }   
+   
+   -count: receives a absolute coordinate and count the number of cells in the 
+   desired state in its kernel neighborhood
+   
+   +check: receives a absolute coordinate and check if the counting
+   condition is met
 */
 
 if (window.mlca === undefined) {
@@ -12,6 +21,15 @@ if (window.mlca === undefined) {
 
 mlca.Condition = function(specs){
     'use strict';
+	
+	/*
+		targetLayerID: identification of the Layer it fetch cells
+		kernel: the set of coordinates for this condition neighborhood
+		number: constant to be compared with the number of counted neighbors
+		state: state to be counted
+		compOperation: string with the comparative operator
+		layerRef: pointer to the layer it fetch cells
+	*/
 	
 	this.targetLayerID = specs.targetLayerID;
     this.kernel = specs.kernel;
@@ -23,6 +41,11 @@ mlca.Condition = function(specs){
 };
 
 mlca.Condition.prototype = {
+	
+	/*
+	  count: receives a absolute coordinate and count the number of cells in the 
+	  desired state in its kernel neighborhood
+	*/
 	count: function(coords){
 	'use strict';
 	
@@ -37,7 +60,12 @@ mlca.Condition.prototype = {
 	}
 	return c;
     },
-    check: function(coords){
+	
+	/*
+	  check: receives a absolute coordinate and check if the counting
+	  condition is met
+    */
+	check: function(coords){
 	'use strict';
 	
 	var c = this.count(coords);
