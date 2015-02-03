@@ -2,17 +2,16 @@
   LayerDataStructure:
   
   -topology: Layer's edge rule ('noloop','xloop','yloop','xyloop')
-  -dimensions
+  -dimensions: the size of the LayerDataStructure
 
   specs: {
 		dimensions, 
 		topology, 
-		type
   }
   
   +clear(state): set all cells to the state given by parameters.
   
-  -isValidCoord(coord): check if the coordinate given is within the layed dimension or is
+  -isValidCoord(coord): check if the coordinate given is within the layer dimension or is
   validated by the topology, if so, returns true, else returns false.
   
   -topologyHandler(coord): ajust the coordinate values given, if greater than the dimension or negative, 
@@ -25,14 +24,17 @@
   -setCell(coord,newValue): Dummy method, must be overwritten by the children according to its dataStructure. 
 */
 
-mlca.LayerDataStructure = function () {
+mlca.LayerDataStructure = function (specs) {
     'use strict'; 
+	 
+	 this.dimensions = specs.dimensions;
+    this.topology = specs.topology;
 };
 
 mlca.LayerDataStructure.prototype = {
-    dimensions: {x:100, y:100},
-    topology: 'noloop',
+    
 	 clear: function(state){
+	'use strict';
 	console.log('clear');
 	var it = {x:0,y:0};
 	for (it.x = 0;it.x < this.dimensions.x;it.x++){

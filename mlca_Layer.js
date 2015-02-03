@@ -1,20 +1,22 @@
 /* Layer: contain the layer characteristics
 
+	-dimensions: the size of the LayerDataStructure
+	-isVisible: tells if it's currently begin drawn
+	-id: layer identifier
 	-type: contain the inner representation of the states (bool, int, etc);
-   -id: layer identifier
+	-topology: layer's edge rule ('noloop','xloop','yloop','xyloop')
+	-defaultState: the target state of the cells when the layer is cleared
 	-interfaceData: contain the graphic representation for each state
-   -dataStructure: contain the way states are stored (int matrix, bit map, etc)
 	-buffer: stores the data of the current and the next configuration of states of the layer
-   
+	
    specs = {
-		DataStructure: constructor da layerDataStructure desejada
+		DataStructure: contain the way states are stored (int matrix, bit map, etc)
       dimensions,
       type,
       topology,
 		defaultState,
       layerID,
       interfaceData
-      name
    }
 	
 	+clear(state): set all cells in the current and next step buffer to the state in parameter, 
@@ -31,8 +33,8 @@
 	-initDataStructure(DataStructure): assign the data structure given by parameter to the buffers, 
 	the layerDataStructure parameters are taken from the layer object.
 	
-	+readFromString(string,func,offset): reads a string and assign the states given by the chars to the cells 
-	starting at a certain offset, from left to right. '\n' indicates a line break, which means the next cell to
+	+readFromString(string,func,offset): reads a string and assign the states given by the chars, according to the given func,
+	to the cells starting at a certain offset, from left to right. '\n' indicates a line break, which means the next cell to
 	be assigned is on a line below the current.
 */
  
@@ -42,12 +44,11 @@ mlca.Layer = function(specs) {
     this.isVisible = true;
     this.id = specs.layerID;
     this.type = specs.type;
-    this.name = specs.name;
     this.topology = specs.topology;
 	 this.defaultState = specs.defaultState;
     this.interfaceData = specs.interfaceData;
     this.initDataStructure(specs.DataStructure);
-    console.log(this.name + "'s data structure initialized");
+    console.log(this.id + "'s data structure initialized");
     this.buffer.current=this.buffer[0];    
     this.buffer.next=this.buffer[1];
     return this;

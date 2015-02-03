@@ -2,12 +2,12 @@
 
    Monolithic iterator: access to all modules
 	
-	+begin: initiate the ruleset list, most display parameters, the main loop
+	+begin(): initiate the ruleset list, most display parameters, the main loop
 	the list of layers, the neighborhood libraries and predefined rules and layers
 	
-	-draw: draws the cells into the canvas, followed by the grid
+	-draw(): draws the cells into the canvas, followed by the grid
 	
-	-iterate: compute the next state of all layers
+	-iterate(): compute the next state of all layers
 */
 
 mlca.automaton = {};
@@ -165,7 +165,6 @@ mlca.automaton.begin = function(){
     mlca.layers = {
 	gol :
 	{
-	    name:'gol',
 	    dimensions: mlca.fieldSize,
 	    type: 'boolean',
 	   	    topology: 'xyloop',

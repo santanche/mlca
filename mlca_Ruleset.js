@@ -1,10 +1,11 @@
 /*
   Ruleset: a set of rules for a determined layer
   
+  -ruleList: rule[]
+  
   specs: {ruleList}
   
-  -ruleList
-  +run(coordinate) Return a boolean telling if a rule succeeded. 
+  +run(coordinate): Return a boolean telling if a rule succeeded. 
 					Try to apply one of the rules in rule List then exit.
 */
 

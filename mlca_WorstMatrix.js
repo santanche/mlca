@@ -3,6 +3,18 @@
 	
 	-type: the type of data it stores (integers or booleans)
 	-matrix: javascript array for storing the states
+	-topology: Layer's edge rule ('noloop','xloop','yloop','xyloop')
+   -dimensions: the size of the LayerDataStructure
+	
+	specs: {
+		dimensions,
+		type,
+		topology,
+	}
+	
+	+getCell(coords): returns the state of the cell given by the coordinate parameter
+	
+	+setCell(coords, value): set the state of the cell given by the coordinate parameter to the given value, returns true if successful
 	
 */
 
@@ -31,7 +43,7 @@ mlca.WorstMatrix = function (specs) {
     return this;
 };
 
-mlca.WorstMatrix.prototype = new mlca.LayerDataStructure();
+mlca.WorstMatrix.prototype = new mlca.LayerDataStructure({dimensions:this.dimensions, topology:this.topology});
 
 mlca.WorstMatrix.prototype.getCell = function (coord) {
     'use strict';
