@@ -4,6 +4,7 @@
    specs = {
    layerID,
    conditions,
+	probability,
    targetState
    }
    
@@ -19,13 +20,20 @@ mlca.Rule = function(specs){
 		conditions: the conditions to be checked
 		targetState: the state the current cell becomes if the checks succeed
 		layerRef: pointer to layer it modifies
+		probability: if the conditions are meet, runs a probability from 0 to 1 for the rule to be applied
+		if none is given, probability is set to 1.
 	*/
 	
 	this.layerID = specs.layerID;
-    this.conditions = specs.conditions;
-    this.targetState = specs.targetState;
-    this.layerRef = mlca.layerList.getLayerByID(this.layerID);
-
+   this.conditions = specs.conditions;
+	this.targetState = specs.targetState;
+   this.layerRef = mlca.layerList.getLayerByID(this.layerID);
+	if(specs.probability !== undefined){
+		this.probability = specs.probability;	
+	}
+	else{
+		this.probability = 1;	
+	}
 };
 
 mlca.Rule.prototype = {
@@ -41,19 +49,24 @@ mlca.Rule.prototype = {
 	var i = 0, ret = true;
 	for (i = 0; i<this.conditions.length; i+=1){
 	    if (!(this.conditions[i].check(coords))){
-		ret = false;
-		break;
+			ret = false;
+			break;
 	    }
 	}
 	if (ret){
-	    if (this.layerRef === undefined){
+	   if (this.layerRef === undefined){
 			this.layerRef = mlca.layerList.getLayerByID(this.layerID);
 		}
-	    this.layerRef.write(coords,this.targetState);
-	    return true;
+		if(Math.random() < this.probability){
+			this.layerRef.write(coords,this.targetState);
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	else{
 		return false;
 	}
-    }
+   }
 };

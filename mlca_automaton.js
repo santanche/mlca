@@ -34,9 +34,13 @@ mlca.automaton.begin = function(){
       this.cellSize: size for the grid cells
     */
 
-    if (mlca.fieldSize === undefined) mlca.fieldSize = {x:30,y:30};
+    if (mlca.fieldSize === undefined) {
+		mlca.fieldSize = {x:30,y:30};
+	}
     this.play = false;
-    if(this.fps === undefined) this.fps = 10;
+    if(this.fps === undefined) {
+		this.fps = 10;
+	}
     if(this.cellSize === undefined) this.cellSize = 10;
     if (!this.displayInfo) this.displayInfo = {
 		cellSize: this.cellSize,
@@ -122,7 +126,7 @@ mlca.automaton.begin = function(){
 			stateToCount:true,
 			number: 1,
 			compOperation: '<='
-		    })]
+		    })],
 	    }),
 	    new mlca.Rule({
 		layerID:'main',
