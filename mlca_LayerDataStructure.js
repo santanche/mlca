@@ -6,7 +6,7 @@
 
   specs: {
 		dimensions, 
-		topology, 
+		topology
   }
   
   +clear(state): set all cells to the state given by parameters.
