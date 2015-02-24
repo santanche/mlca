@@ -27,39 +27,26 @@
 
 mlca.SimpleCanvasDisplay = function(specs){
     'use strict';
+	
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext('2d');
-	 this.cellSize = specs.cellSize;
-	 this.dimensions = specs.dimensions;
+	this.cellSize = specs.cellSize;
+	this.dimensions = specs.dimensions;
     this.canvas.width = this.cellSize * this.dimensions.x + 1;
     this.canvas.height = this.cellSize * this.dimensions.y + 1;
+	
+    var specs = {canvas:this.canvas, ctx:this.ctx, dimensions:this.dimensions, cellSize:this.cellSize};
+	
+	mlca.IDisplay.call(this, specs);
+	
     
-	 var selectedCell = {x:0,y:0};
-    var selectedLayer;
-	 var changeCell = function(e){
-		mlca.automaton.play = false;
-		selectedCell.x = Math.floor((e.pageX - canvas.offsetLeft -2)/specs.cellSize); 
-		selectedCell.y = Math.floor((e.pageY - canvas.offsetTop -2)/specs.cellSize); 
-		//Placeholder
-		
-		if (selectedLayer === undefined) selectedLayer = mlca.layerList[0];
-
-		selectedLayer.write(
-			 selectedCell,
-			 selectedLayer.interfaceData.stateAlternate(
-			selectedLayer.read(selectedCell)
-			 ),
-			 true);
-
-		// End placeholder
-		mlca.automaton.draw();
-
-		console.log(selectedCell);
-	 }
-    this.canvas.addEventListener('click',changeCell);
 };
 
-mlca.SimpleCanvasDisplay.prototype = new mlca.IDisplay({canvas:this.canvas, ctx:this.ctx, dimensions:this.dimensions, cellSize:this.cellSize});
+mlca.SimpleCanvasDisplay.prototype = Object.create(mlca.IDisplay.prototype);
+mlca.SimpleCanvasDisplay.constructor = mlca.SimpleCanvasDisplay;
+
+//mlca.SimpleCanvasDisplay({canvas:this.canvas, ctx:this.ctx, dimensions:this.dimensions, cellSize:this.cellSize});
+
 mlca.SimpleCanvasDisplay.prototype.drawGrid = function(){
     'use strict';
 	
