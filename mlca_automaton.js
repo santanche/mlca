@@ -128,6 +128,19 @@ mlca.automaton.begin = function(){
 			compOperation: '<='
 		    })],
 	    }),
+        // TEST ADDED
+        new mlca.Rule({
+		layerID:'main',
+		targetState:false,
+		conditions:[
+		    new mlca.Condition({
+			targetLayerID:'TEST',
+			kernel:mlca.kernels.self,
+			stateToCount:true,
+			number: 1,
+			compOperation: '=='
+		    })]
+	    }),
 	    new mlca.Rule({
 		layerID:'main',
 		targetState:false,
@@ -166,6 +179,7 @@ mlca.automaton.begin = function(){
 	gol :
 	{
 	    dimensions: mlca.fieldSize,
+        visibility: true,
 	    type: 'boolean',
 	   	    topology: 'xyloop',
 	    layerID: 'main',
@@ -187,7 +201,33 @@ mlca.automaton.begin = function(){
 		    return ret;
 		}// end stateRepresentation
 	    }// end interfaceData
-	}// end specs
+	},// end specs
+    second :
+	{
+	    dimensions: mlca.fieldSize,
+        visibility: false,
+	    type: 'boolean',
+	   	    topology: 'xyloop',
+	    layerID: 'TEST',
+	    DataStructure:mlca.WorstMatrix,
+	    defaultState:false,
+	    interfaceData:{
+		stateAlternate: function (state){
+		    return !state;
+		},
+		stateRepresentation: function (state){
+		    var ret;
+		    switch (state){
+		    case true:
+			ret = 'red';
+			break;
+		    default:
+			ret = 'blue';
+		    }
+		    return ret;
+		}// end stateRepresentation
+	    }// end interfaceData
+	}// end specs    
     };
     mlca.conditions = {};
         
@@ -199,6 +239,7 @@ mlca.automaton.begin = function(){
     */
 	
     mlca.layerList.push(new mlca.Layer(mlca.layers.gol));
+    mlca.layerList.push(new mlca.Layer(mlca.layers.second));
     mlca.rulesetList.push(new mlca.Ruleset({
 	ruleList:mlca.rulelists.gol,
 	layerID:'main'

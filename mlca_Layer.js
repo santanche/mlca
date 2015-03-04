@@ -14,7 +14,7 @@
       dimensions,
       type,
       topology,
-		defaultState,
+      defaultState,
       layerID,
       interfaceData
    }
@@ -40,17 +40,18 @@
  
 mlca.Layer = function(specs) {
     'use strict';
+    this.buffer = [];
     this.dimensions = specs.dimensions;
-    this.isVisible = true;
+    this.isVisible = specs.visibility;
     this.id = specs.layerID;
     this.type = specs.type;
     this.topology = specs.topology;
-	 this.defaultState = specs.defaultState;
+    this.defaultState = specs.defaultState;
     this.interfaceData = specs.interfaceData;
     this.initDataStructure(specs.DataStructure);
-    console.log(this.id + "'s data structure initialized");
     this.buffer.current=this.buffer[0];    
     this.buffer.next=this.buffer[1];
+    console.log(this.id + "'s data structure initialized");
     return this;
     };
 
@@ -58,8 +59,7 @@ mlca.Layer.prototype = {
     type : '',
     id : '',
     interfaceData: {},
-    buffer:[],
-	 clear: function(state){
+    clear: function(state){
 	if (state===undefined){
 	    if (this.defaultState!==undefined){
 		state = this.defaultState;

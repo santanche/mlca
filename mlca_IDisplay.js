@@ -32,8 +32,13 @@ mlca.IDisplay = function(specs){
 		selectedCell.y = Math.floor((e.pageY - canvas.offsetTop -2)/specs.cellSize); 
 		//Placeholder
 		
-		if (selectedLayer === undefined) selectedLayer = mlca.layerList[0];
-
+        var i;
+        for(i = 0; i<mlca.layerList.length; i++){
+               if(mlca.layerList[i].isVisible){
+                    selectedLayer = mlca.layerList[i];   
+               }
+        }
+        
 		selectedLayer.write(
 			 selectedCell,
 			 selectedLayer.interfaceData.stateAlternate(
@@ -71,6 +76,17 @@ mlca.IDisplay.prototype = {
 	},
 	 changeLayer:function(){
 	 'use strict';
-			
+         var i;
+         for(i = 0; i<mlca.layerList.length; i++){
+            if(mlca.layerList[i].isVisible){
+                mlca.layerList[i].isVisible = false;
+                mlca.layerList[(i+1) % mlca.layerList.length].isVisible = true;
+                
+                this.drawBackground();
+                this.drawLayer(mlca.layerList[(i+1) % mlca.layerList.length]);
+                this.drawGrid();
+                break;
+            }
+        }
 	}
 };

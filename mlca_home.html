@@ -30,49 +30,7 @@
 				}
 				mlca.automaton.draw();
    				 })();">Clear grid</button>
-    <br>
-    Width: <textarea id="formWidth"></textarea><br>
-    Height: <textarea id="formHeight"></textarea><br>
-    Frames per second: <textarea id="fps"></textarea><br>
-    Cellsize: <textarea id="cellSize"></textarea><br>
-    
-    <button id="update" onClick="(function(){
-   				 var reload = false;
-   				 var k = document.getElementById('formWidth').value;
-   				 var j;
-   				 if (k !== ''){j = +k;
-   				 if (j){
-   				 mlca.automaton.displayInfo.dimensions.x=j;
-   				 reload = true;}
-   				 else k = 'Invalid input';
-   				 }
-   				 k = document.getElementById('formHeight').value;
-   				 if (k !== ''){j = +k;
-   				 if (j) {
-	   			 mlca.automaton.displayInfo.dimensions.y=j;	
-   				 reload = true;}
-   				 else k = 'Invalid input';
-   				 }
-   				 k = document.getElementById('fps').value;
-   				 if (k !== '') {j = +k;
-   				 if (j) mlca.automaton.fps=j;
-   				 else k = 'Invalid input';
-   				 }
-   				 k = document.getElementById('cellSize').value;
-   				 if (k !== ''){j = +k;
-   				 if (j) {
-   				 mlca.automaton.displayInfo.cellSize=j;
-   				 reload = false;}
-   				 else k = 'Invalid input';
-   				 }
-   				 if (reload) mlca.automaton.begin();
-   				 })();">Update</button>
-<button id="clear" onClick="(function(){
-   				 document.getElementById('formWidth').value = '';
-   				 document.getElementById('formHeight').value = '';
-   				 document.getElementById('fps').value = '';
-   				 document.getElementById('cellSize').value = '';
-   				 })();">Clear Fields</button>
+    <button id="change" onClick="mlca.automaton.display.changeLayer()">Change Layer</button>  
   </body>
 
 </html>
