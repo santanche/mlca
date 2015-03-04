@@ -15,7 +15,7 @@ mlca.automaton = {};
 mlca.automaton.begin = function(){
     'use strict';
     console.log("automaton.begin()");
-
+	
     /*
 	  Initializations:
     
@@ -46,6 +46,13 @@ mlca.automaton.begin = function(){
 		cellSize: this.cellSize,
 		dimensions: mlca.fieldSize
     };
+	
+	document.getElementById("canvas").addEventListener('mousemove', function(event){
+		document.getElementById("mousex").innerHTML = Math.floor(event.clientX/mlca.automaton.cellSize);
+		document.getElementById("mousey").innerHTML = Math.floor(event.clientY/mlca.automaton.cellSize);
+	}, false);
+	
+	
     // Fix p/ multiplos event listeners
     if (!this.display) this.display = new mlca.SimpleCanvasDisplay(this.displayInfo);   
 
