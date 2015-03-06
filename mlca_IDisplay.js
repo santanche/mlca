@@ -5,6 +5,8 @@
 	-ctx: holds reference to Html5 canvas 2d context, used for drawing on the canvas
 	-cellSize: the size in pixels of the Cells
 	-dimensions: the number of cells in the x and y coordinates
+	-selectedCell: coordinate of the cell clicked by the user
+	-selectedLayer: layer selected by the user
 	
 	specs{
 		canvas,
@@ -13,7 +15,12 @@
 		dimensions
 	}
     
+    -onClick(e): event handled by the HTML onClick, alternate the state of the cell clicked by the user.
+	
+    +returnLayer(): returns the selected layer
+    
     +drawBackground(color): draws the background of the canvas according to the color given (only visible if the cells are not opaque)
+    
 */
 
 mlca.IDisplay = function(specs){
@@ -23,22 +30,33 @@ mlca.IDisplay = function(specs){
 	this.dimensions = specs.dimensions;
 	this.cellSize = specs.cellSize;
 	
+    this.returnLayer = function(){
+        var i;
+        for(i = 0; i<mlca.layerList.length; i++){
+               if(mlca.layerList[i].isVisible){
+                    return mlca.layerList[i];   
+               }
+        }   
+    }
+    
 	var selectedCell = {x:0,y:0};
 	var selectedLayer;
-	
+	var that = this;
+    
 	var changeCell = function(e){
-		mlca.automaton.play = false;
+		
+        selectedLayer = that.returnLayer();
+        
+        //Case the layer is locked
+        if(selectedLayer.lock){
+            return;   
+        }
+        
+        mlca.automaton.play = false;
 		selectedCell.x = Math.floor((e.pageX - canvas.offsetLeft -2)/specs.cellSize); 
 		selectedCell.y = Math.floor((e.pageY - canvas.offsetTop -2)/specs.cellSize); 
 		//Placeholder
 		
-        var i;
-        for(i = 0; i<mlca.layerList.length; i++){
-               if(mlca.layerList[i].isVisible){
-                    selectedLayer = mlca.layerList[i];   
-               }
-        }
-        
 		selectedLayer.write(
 			 selectedCell,
 			 selectedLayer.interfaceData.stateAlternate(
@@ -52,6 +70,8 @@ mlca.IDisplay = function(specs){
 		console.log(selectedCell);
 	}
 	this.canvas.addEventListener('click',changeCell);
+    
+    
 };
 
 mlca.IDisplay.prototype = {
@@ -79,11 +99,22 @@ mlca.IDisplay.prototype = {
          var i;
          for(i = 0; i<mlca.layerList.length; i++){
             if(mlca.layerList[i].isVisible){
+                var newLayer = mlca.layerList[(i+1) % mlca.layerList.length];
+                
                 mlca.layerList[i].isVisible = false;
-                mlca.layerList[(i+1) % mlca.layerList.length].isVisible = true;
+                newLayer.isVisible = true;
+                
+                document.getElementById("selectedlayer").innerHTML = newLayer.id;
+                if(mlca.automaton.display.returnLayer().lock){
+                    document.getElementById("lockstatus").innerHTML = " (LOCKED)";
+                }
+                else{
+                    document.getElementById("lockstatus").innerHTML = "";   
+                }
+                
                 
                 this.drawBackground();
-                this.drawLayer(mlca.layerList[(i+1) % mlca.layerList.length]);
+                this.drawLayer(newLayer);
                 this.drawGrid();
                 break;
             }

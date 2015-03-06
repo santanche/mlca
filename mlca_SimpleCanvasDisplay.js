@@ -5,23 +5,11 @@
 	-ctx: holds reference to Html5 canvas 2d context, used for drawing on the canvas
 	-cellSize: the size in pixels of the Cells
 	-dimensions: the number of cells in the x and y coordinates
-	-selectedCell: coordinate of the cell clicked by the user
-	-selectedLayer: layer selected by the user
-	
-	specs{
-		cellSize
-		dimension
-	}
-	
-	-onClick(e): event handled by the HTML onClick, alternate the state of the cell clicked by the user.
 	
 	+drawGrid(): draws a simple grid according to the canvas dimensions and the specified cell size.
 	
 	-drawLayer(layer): if the layer.isVisible parameter is set to true, draws the cells 
 	according to the interfaceData parameters of the layer
-	
-	-drawBackground(color): color the canvas background with a given color, if none is given, the color is
-	set to white.
 	
 */
 

@@ -8,6 +8,7 @@
 	-defaultState: the target state of the cells when the layer is cleared
 	-interfaceData: contain the graphic representation for each state
 	-buffer: stores the data of the current and the next configuration of states of the layer
+    -lock: boolean to tell if the user can edit this layer or not.
 	
    specs = {
 		DataStructure: contain the way states are stored (int matrix, bit map, etc)
@@ -17,6 +18,7 @@
       defaultState,
       layerID,
       interfaceData
+      lock
    }
 	
 	+clear(state): set all cells in the current and next step buffer to the state in parameter, 
@@ -48,6 +50,7 @@ mlca.Layer = function(specs) {
     this.topology = specs.topology;
     this.defaultState = specs.defaultState;
     this.interfaceData = specs.interfaceData;
+    this.lock = specs.lock;
     this.initDataStructure(specs.DataStructure);
     this.buffer.current=this.buffer[0];    
     this.buffer.next=this.buffer[1];

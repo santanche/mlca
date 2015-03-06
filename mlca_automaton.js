@@ -141,7 +141,7 @@ mlca.automaton.begin = function(){
 		targetState:false,
 		conditions:[
 		    new mlca.Condition({
-			targetLayerID:'TEST',
+			targetLayerID:'test',
 			kernel:mlca.kernels.self,
 			stateToCount:true,
 			number: 1,
@@ -192,7 +192,8 @@ mlca.automaton.begin = function(){
 	    layerID: 'main',
 	    DataStructure:mlca.WorstMatrix,
 	    defaultState:false,
-	    interfaceData:{
+	    lock:false,
+        interfaceData:{
 		stateAlternate: function (state){
 		    return !state;
 		},
@@ -215,9 +216,10 @@ mlca.automaton.begin = function(){
         visibility: false,
 	    type: 'boolean',
 	   	    topology: 'xyloop',
-	    layerID: 'TEST',
+	    layerID: 'test',
 	    DataStructure:mlca.WorstMatrix,
 	    defaultState:false,
+        lock:false,
 	    interfaceData:{
 		stateAlternate: function (state){
 		    return !state;
@@ -266,6 +268,11 @@ mlca.automaton.begin = function(){
 				    );
     //End Interface prototype
 	
+    document.getElementById("selectedlayer").innerHTML = mlca.automaton.display.returnLayer().id;
+    if(mlca.automaton.display.returnLayer().lock){
+        document.getElementById("lockstatus").innerHTML = " (LOCKED)";
+    }
+        
 	
     this.draw();
     mlca.mainloop();
