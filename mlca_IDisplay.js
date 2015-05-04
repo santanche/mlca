@@ -33,10 +33,12 @@ mlca.IDisplay = function(specs){
     this.returnLayer = function(){
         var i;
         for(i = 0; i<mlca.layerList.length; i++){
-               if(mlca.layerList[i].isVisible){
-                    return mlca.layerList[i];   
+               if(!mlca.layerList[i].isVisible){
+                    return mlca.layerList[i-1];   
                }
-        }   
+        }
+        var last = mlca.layerList.length-1;
+        return mlca.layerList[last];
     }
     
 	var selectedCell = {x:0,y:0};
@@ -98,12 +100,16 @@ mlca.IDisplay.prototype = {
 	 'use strict';
          var i;
          for(i = 0; i<mlca.layerList.length; i++){
-            if(mlca.layerList[i].isVisible){
-                var newLayer = mlca.layerList[(i+1) % mlca.layerList.length];
+            if(!mlca.layerList[i].isVisible){
+                /*var newLayer = mlca.layerList[(i+1) % mlca.layerList.length];
                 
                 mlca.layerList[i].isVisible = false;
                 newLayer.isVisible = true;
+                */
                 
+                mlca.layerList[i].isVisible = true;
+                
+                var newLayer = mlca.layerList[i];
                 document.getElementById("selectedlayer").innerHTML = newLayer.id;
                 if(mlca.automaton.display.returnLayer().lock){
                     document.getElementById("lockstatus").innerHTML = " (LOCKED)";
@@ -112,6 +118,26 @@ mlca.IDisplay.prototype = {
                     document.getElementById("lockstatus").innerHTML = "";   
                 }
                 
+                
+                this.drawBackground();
+                this.drawLayer(newLayer);
+                this.drawGrid();
+                break;
+            }
+            if(i === mlca.layerList.length - 1 && mlca.layerList[i].isVisible === true){
+                for(i = 0; i<mlca.layerList.length;i++){
+                    mlca.layerList[i].isVisible = false;   
+                }
+                mlca.layerList[0].isVisible = true;
+                
+                var newLayer = mlca.layerList[0];
+                document.getElementById("selectedlayer").innerHTML = newLayer.id;
+                if(mlca.automaton.display.returnLayer().lock){
+                    document.getElementById("lockstatus").innerHTML = " (LOCKED)";
+                }
+                else{
+                    document.getElementById("lockstatus").innerHTML = "";   
+                }
                 
                 this.drawBackground();
                 this.drawLayer(newLayer);
