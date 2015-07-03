@@ -33,6 +33,10 @@ mlca.Condition = function(specs){
     this.kernel = specs.kernel;
     this.number = specs.number;
     this.state = specs.stateToCount;
+    if(specs.attributeToCount !== undefined){
+        this.attribute = specs.attributeToCount;
+        this.attributeIndex = specs.attributeIndex;
+    }
     this.compOperation = specs.compOperation;
     console.log("Condition fetching reference to " + this.targetLayerID);
     this.layerRef = mlca.layerList.getLayerByID(this.targetLayerID);
@@ -48,8 +52,16 @@ mlca.Condition.prototype = {
 	    this.layerRef = mlca.layerList.getLayerByID(this.targetLayerID);
 	}
 	for (i = 0; i<this.kernel.relPosList.length; i += 1){
-	    if (this.layerRef.read(this.kernel.getAbsCoords(coords,i))===this.state){
-			c += 1;
+        var cell = this.layerRef.read(this.kernel.getAbsCoords(coords,i)); 
+        if (cell.state === this.state){
+			if(this.attribute !== undefined){
+                if(cell.attributes[this.attributeIndex] === this.attribute){
+                    c += 1;    
+                }
+            }
+            else{
+                c += 1;   
+            }
 		}
 	}
 	return c;

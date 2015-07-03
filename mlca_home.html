@@ -1,40 +1,48 @@
 <html>
-  <style>
-    body {
-    background-color:tan
-    }
-  </style>
-  <title> MLCA Canvas Prototype </title>
-  <head> 
-    <script type="text/javascript" src="mlca_Condition.js"></script>
-    <script type="text/javascript" src="mlca_Kernel.js"></script>
-    <script type="text/javascript" src="mlca_LayerDataStructure.js"></script>
-    <script type="text/javascript" src="mlca_Layer.js"></script>
-    <script type="text/javascript" src="mlca_Rule.js"></script>
-    <script type="text/javascript" src="mlca_Ruleset.js"></script>
-    <script type="text/javascript" src="mlca_WorstMatrix.js"></script>
-    <script type="text/javascript" src="mlca_automaton.js"></script>
-    <script type="text/javascript" src="mlca_IDisplay.js"></script>
-    <script type="text/javascript" src="mlca_SimpleCanvasDisplay.js"></script>
-  </head>
-  <body onLoad="mlca.automaton.begin()">
-    <canvas id="canvas" width="500" height="500"></canvas>
-    <br>
-	Layer Name: <text id="selectedlayer"></text> <text id="lockstatus"></text>
-    <br>
-    Coordinate: [<text id="mousex"></text>,<text id="mousey"></text>] 
-	<br>
-    <button id="iterate" onClick="mlca.automaton.iterate()">Iterate</button>
-    <button id="play" onClick="mlca.automaton.play = true;">Play</button>
-    <button id="stop" onClick="mlca.automaton.play = false;">Stop</button>
-    <button id="clear" onClick="(function(){
-				var i = 0;
-				for (i = 0; i<mlca.layerList.length;i++){
-				mlca.layerList[i].clear();
-				}
-				mlca.automaton.draw();
-   				 })();">Clear grid</button>
-    <button id="change" onClick="mlca.automaton.display.changeLayer()">Change Layer</button>  
-  </body>
+    <head> 
+        <meta charset="UTF-8" /> 
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title> MLCA Canvas Prototype </title>
+        <script type="text/javascript" src="mlca_Condition.js"></script>
+        <script type="text/javascript" src="mlca_Kernel.js"></script>
+        <script type="text/javascript" src="mlca_LayerDataStructure.js"></script>
+        <script type="text/javascript" src="mlca_Layer.js"></script>
+        <script type="text/javascript" src="mlca_Rule.js"></script>
+        <script type="text/javascript" src="mlca_Ruleset.js"></script>
+        <script type="text/javascript" src="mlca_WorstMatrix.js"></script>
+        <script type="text/javascript" src="mlca_automaton.js"></script>
+        <script type="text/javascript" src="mlca_IDisplay.js"></script>
+        <script type="text/javascript" src="mlca_SimpleCanvasDisplay.js"></script>
+    </head>
+    <body onLoad="mlca.automaton.begin()">
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <div id='centerWrap'>
+            <button id="iterate" onClick="mlca.automaton.iterate()" onmouseup="blur()">
+                <font color = 'black' face = 'impact'>Iterate</font>
+            </button>
+            <button id="play" onClick="mlca.automaton.play = true;" onmouseup="blur()">
+                <font color = 'black' face = 'impact'>Play</font>
+            </button>
+            <button id="stop" onClick="mlca.automaton.play = false;" onmouseup="blur()">
+                <font color = 'black' face = 'impact'>Stop</font>
+            </button>
+            <button id="clear" onClick="(function(){
+                        var i = 0;
+                        for (i = 0; i<mlca.layerList.length;i++){
+                        mlca.layerList[i].clear();
+                        }
+                        mlca.automaton.draw();
+                                        })();" onmouseup="blur()">
+                <font color = 'black' face = 'impact'>Clear grid</font>
+            </button>
+            <button id="change" onClick="mlca.automaton.display.changeLayer()" onmouseup="blur()">
+                <font color = 'black' face = 'impact'>Change Layer</font>
+            </button>
+            <font color = 'grey' face = 'impact'>>Layer Name: <text id="selectedlayer"></text> <text id="lockstatus"></text></font>
+            <br>
+            <font color = 'grey' face = 'impact'>>Coordinate: [<text id="mousex"></text>,<text id="mousey"></text>]</font>
+            <br>
+        </div>
+    </body>
 
 </html>
