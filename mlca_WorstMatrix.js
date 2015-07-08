@@ -1,4 +1,4 @@
-﻿/*
+/*
 	LayedDataStructure WorstMatrix: Simple matrix using the regular array from javascript, may store either integers or booleans.
 	
 	-type: the type of data it stores (integers or booleans)
@@ -31,11 +31,11 @@ mlca.WorstMatrix = function (specs) {
     var init;
     switch (this.type) {
 		case 'boolean':
-			init = false;
+			init = {state:false, attributes:[]};
 		break;
 		case 'integer':
 		default:
-			init = 0;
+			init = {state:0, attributes:[]};
     }
     for (i = 0; i < this.matrix.length; i += 1) {
 	this.matrix[i] = init;

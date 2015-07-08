@@ -3,7 +3,7 @@
 	-dimensions: the size of the LayerDataStructure
 	-isVisible: tells if it's currently begin drawn
 	-id: layer identifier
-	-type: contain the inner representation of the states (bool, int, etc);
+	-type: contain the inner representation of the states (boolean, integer, etc);
 	-topology: layer's edge rule ('noloop','xloop','yloop','xyloop')
 	-defaultState: the target state of the cells when the layer is cleared
 	-interfaceData: contain the graphic representation for each state
@@ -60,8 +60,11 @@ mlca.Layer = function(specs) {
 
 mlca.Layer.prototype = {
     type : '',
+    
     id : '',
+    
     interfaceData: {},
+    
     clear: function(state){
 	if (state===undefined){
 	    if (this.defaultState!==undefined){
@@ -73,10 +76,12 @@ mlca.Layer.prototype = {
 	this.buffer.next.clear(state);
 	this.buffer.current.clear(state);
     },
+    
     read: function(coords){
 	'use strict';
 	return this.buffer.current.getCell(coords);
     },
+    
     write: function(coords, value, dontSwap){
 	'use strict';
 	var matrix;
@@ -88,6 +93,7 @@ mlca.Layer.prototype = {
 	}
 	return matrix.setCell(coords, value);
     },
+    
     swap: function(){
 	'use strict';
 	
@@ -95,6 +101,7 @@ mlca.Layer.prototype = {
 	this.buffer.next = this.buffer.current;
 	this.buffer.current = a;
     },
+    
     initDataStructure: function (DataStructure){
 	'use strict';
 	console.log("Initializing data structure type "
@@ -111,6 +118,7 @@ mlca.Layer.prototype = {
 	    );
 	}//end for
     },
+    
     readFromString: function (string,func,offset){
 	'use strict';
 	console.log('Reading from string:');
