@@ -1609,7 +1609,484 @@ mlca.setRules = function () {
             }),
             
             /*
-                Mudança de direção
+                Mudança de direção com feromônio
+                =>Espaço recebe formiga com direção trocada
+            */
+            
+            //Célula [Nada] + Vizinho [Formiga(topLeft)] = Célula [Formiga(left)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[7]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:1,y:1}]}),
+                stateToCount:1,
+                attributeToCount:0,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            //Célula [Nada] + Vizinho [Formiga(topLeft)] = Célula [Formiga(top)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[1]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:1,y:1}]}),
+                stateToCount:1,
+                attributeToCount:0,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            
+            //Célula [Nada] + Vizinho [Formiga(top)] = Célula [Formiga(topLeft)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[0]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:0,y:1}]}),
+                stateToCount:1,
+                attributeToCount:1,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            //Célula [Nada] + Vizinho [Formiga(top)] = Célula [Formiga(topRight)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[2]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:0,y:1}]}),
+                stateToCount:1,
+                attributeToCount:1,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            
+            //Célula [Nada] + Vizinho [Formiga(topRight)] = Célula [Formiga(top)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[1]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:-1,y:1}]}),
+                stateToCount:1,
+                attributeToCount:2,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            //Célula [Nada] + Vizinho [Formiga(topRight)] = Célula [Formiga(right)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[3]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:-1,y:1}]}),
+                stateToCount:1,
+                attributeToCount:2,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            
+            //Célula [Nada] + Vizinho [Formiga(right)] = Célula [Formiga(topRight)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[2]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:-1,y:0}]}),
+                stateToCount:1,
+                attributeToCount:3,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            //Célula [Nada] + Vizinho [Formiga(right)] = Célula [Formiga(botRight)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[4]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:-1,y:0}]}),
+                stateToCount:1,
+                attributeToCount:3,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            
+            //Célula [Nada] + Vizinho [Formiga(botRight)] = Célula [Formiga(right)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[3]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:-1,y:-1}]}),
+                stateToCount:1,
+                attributeToCount:4,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            //Célula [Nada] + Vizinho [Formiga(botRight)] = Célula [Formiga(bot)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[5]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:-1,y:-1}]}),
+                stateToCount:1,
+                attributeToCount:4,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),   
+            
+            //Célula [Nada] + Vizinho [Formiga(bot)] = Célula [Formiga(botRight)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[4]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:0,y:-1}]}),
+                stateToCount:1,
+                attributeToCount:5,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            //Célula [Nada] + Vizinho [Formiga(bot)] = Célula [Formiga(botLeft)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[6]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:0,y:-1}]}),
+                stateToCount:1,
+                attributeToCount:5,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            
+            //Célula [Nada] + Vizinho [Formiga(botLeft)] = Célula [Formiga(bot)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[5]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:1,y:-1}]}),
+                stateToCount:1,
+                attributeToCount:6,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            //Célula [Nada] + Vizinho [Formiga(botLeft)] = Célula [Formiga(left)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[7]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:1,y:-1}]}),
+                stateToCount:1,
+                attributeToCount:6,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            
+            //Célula [Nada] + Vizinho [Formiga(left)] = Célula [Formiga(botLeft)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[6]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:1,y:0}]}),
+                stateToCount:1,
+                attributeToCount:7,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            //Célula [Nada] + Vizinho [Formiga(left)] = Célula [Formiga(topLeft)]
+            new mlca.Rule({
+            layerID:'formigas',
+            targetState:{state:1,attributes:[0]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:new mlca.Kernel({relPosList:[{x:1,y:0}]}),
+                stateToCount:1,
+                attributeToCount:7,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+               })]
+            }),
+            
+            /*
+                Mudança de direção sem feromônio
                 =>Espaço recebe formiga com direção trocada
             */
             
@@ -1621,6 +2098,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -1644,6 +2128,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -1674,6 +2165,13 @@ mlca.setRules = function () {
                 compOperation: '=='
                 }),
                 new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
                 targetLayerID:'formigas',
                 kernel:new mlca.Kernel({relPosList:[{x:0,y:1}]}),
                 stateToCount:1,
@@ -1691,6 +2189,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -1721,6 +2226,13 @@ mlca.setRules = function () {
                 compOperation: '=='
                 }),
                 new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
                 targetLayerID:'formigas',
                 kernel:new mlca.Kernel({relPosList:[{x:-1,y:1}]}),
                 stateToCount:1,
@@ -1738,6 +2250,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -1768,6 +2287,13 @@ mlca.setRules = function () {
                 compOperation: '=='
                 }),
                 new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
                 targetLayerID:'formigas',
                 kernel:new mlca.Kernel({relPosList:[{x:-1,y:0}]}),
                 stateToCount:1,
@@ -1785,6 +2311,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -1815,6 +2348,13 @@ mlca.setRules = function () {
                 compOperation: '=='
                 }),
                 new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
                 targetLayerID:'formigas',
                 kernel:new mlca.Kernel({relPosList:[{x:-1,y:-1}]}),
                 stateToCount:1,
@@ -1832,6 +2372,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -1862,6 +2409,13 @@ mlca.setRules = function () {
                 compOperation: '=='
                 }),
                 new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
                 targetLayerID:'formigas',
                 kernel:new mlca.Kernel({relPosList:[{x:0,y:-1}]}),
                 stateToCount:1,
@@ -1879,6 +2433,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -1909,6 +2470,13 @@ mlca.setRules = function () {
                 compOperation: '=='
                 }),
                 new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
                 targetLayerID:'formigas',
                 kernel:new mlca.Kernel({relPosList:[{x:1,y:-1}]}),
                 stateToCount:1,
@@ -1926,6 +2494,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -1956,6 +2531,13 @@ mlca.setRules = function () {
                 compOperation: '=='
                 }),
                 new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
                 targetLayerID:'formigas',
                 kernel:new mlca.Kernel({relPosList:[{x:1,y:0}]}),
                 stateToCount:1,
@@ -1973,6 +2555,13 @@ mlca.setRules = function () {
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:0,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
                 kernel:mlca.kernels.self,
                 stateToCount:0,
                 number: 1,
@@ -2133,13 +2722,13 @@ mlca.setRules = function () {
             
             /*
                 Feromonio deixado pela formiga
-                =>Se não ouver feromonio deixa k = 18
+                =>Se não ouver feromonio deixa k = 9, se houver incrementa 18 até no max 30
             */
             
-            //Célula [Nada] + Vizinho [Formiga] = Célula [Feromonio(18)]
+            //Célula [Nada] + Vizinho [Formiga] = Célula [Feromonio(9)]
             new mlca.Rule({
             layerID:'feromonios',
-            targetState:{state:1,attributes:[18]},
+            targetState:{state:1,attributes:[9]},
             conditions:[
                 new mlca.Condition({
                 targetLayerID:'formigas',
@@ -2156,7 +2745,249 @@ mlca.setRules = function () {
                 compOperation: '=='
                 })]
             }),
-            //Célula [Feromonio] + Vizinho [Formiga] = Célula [Feromonio(29)]
+            //Célula [Feromonio(1)] + Vizinho [Formiga] = Célula [Feromonio(19)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[19]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:1,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(2)] + Vizinho [Formiga] = Célula [Feromonio(20)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[20]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:2,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(3)] + Vizinho [Formiga] = Célula [Feromonio(21)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[21]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:3,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(4)] + Vizinho [Formiga] = Célula [Feromonio(22)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[22]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:4,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(5)] + Vizinho [Formiga] = Célula [Feromonio(23)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[23]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:5,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(6)] + Vizinho [Formiga] = Célula [Feromonio(24)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[24]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:6,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(7)] + Vizinho [Formiga] = Célula [Feromonio(25)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[25]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:7,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(8)] + Vizinho [Formiga] = Célula [Feromonio(26)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[26]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:8,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(9)] + Vizinho [Formiga] = Célula [Feromonio(27)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[27]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:9,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+             //Célula [Feromonio(10)] + Vizinho [Formiga] = Célula [Feromonio(28)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[28]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:10,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+            //Célula [Feromonio(11)] + Vizinho [Formiga] = Célula [Feromonio(29)]
+            new mlca.Rule({
+            layerID:'feromonios',
+            targetState:{state:1,attributes:[29]},
+            conditions:[
+                new mlca.Condition({
+                targetLayerID:'formigas',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                number: 1,
+                compOperation: '=='
+                }),
+                new mlca.Condition({
+                targetLayerID:'feromonios',
+                kernel:mlca.kernels.self,
+                stateToCount:1,
+                attributeToCount:11,
+                attributeIndex:0,
+                number: 1,
+                compOperation: '=='
+                })]
+            }),
+             //Célula [Feromonio] + Vizinho [Formiga] = Célula [Feromonio(29)]
             new mlca.Rule({
             layerID:'feromonios',
             targetState:{state:1,attributes:[29]},
@@ -2169,7 +3000,6 @@ mlca.setRules = function () {
                 compOperation: '=='
                 })]
             }),
-            
             /*
                 Decaimento do feromonio
                 =>Feromonio(x) passa a ser Feromonio(x-1)

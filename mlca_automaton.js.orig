@@ -147,7 +147,7 @@ mlca.automaton.begin = function () {
 		    var ret;
 		    switch (s.state){
 		    case 1:
-			ret = 'red';
+			ret = '#000000';
 			break;
 		    default:
 			ret = 'white';
@@ -182,11 +182,14 @@ mlca.automaton.begin = function () {
 		    var ret;
 		    switch (s.state){
 		    case 1:
-             var n = (s.attributes[0] + 1)/60 + 0.4;
-             ret = "rgba(255,255,0,"+n.toString()+")";
+			ret = 'yellow';
 			break;
 		    default:
-			 ret = "rgba(0,0,0,0.6)" ;
+<<<<<<< HEAD
+			ret = 'purple';
+=======
+			ret = "rgba(0,0,255,0.1)" ;
+>>>>>>> 5bfadafd2859f37538056952d1acb94aa685a0c2
 		    }
 		    return ret;
 		}// end stateRepresentation
