@@ -67,8 +67,8 @@ mlca.SimpleCanvasDisplay.prototype.drawLayer = function(layer){
 		this.ctx.fillStyle = color;
 		this.ctx.fillRect(this.cellSize*it.x+1,
 			     this.cellSize*it.y+1,
-			     this.cellSize*(it.x+1),
-			     this.cellSize*(it.y+1));
+			     this.cellSize,
+			     this.cellSize);
 	    }
 	}
     }

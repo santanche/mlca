@@ -231,7 +231,7 @@ mlca.automaton.begin = function(){
 			ret = 'red';
 			break;
 		    default:
-			ret = 'blue';
+			ret = "rgba(0,0,255,0.1)" ;
 		    }
 		    return ret;
 		}// end stateRepresentation

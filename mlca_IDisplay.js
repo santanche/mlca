@@ -119,7 +119,7 @@ mlca.IDisplay.prototype = {
                 }
                 
                 
-                this.drawBackground();
+                //this.drawBackground();
                 this.drawLayer(newLayer);
                 this.drawGrid();
                 break;
