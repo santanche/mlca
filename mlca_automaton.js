@@ -196,7 +196,7 @@ mlca.automaton.begin = function () {
     
     //Probability of changing direction
     mlca.directionChangeProbability = 0.01;
-    mlca.feromoneFollowingProbability = 0.999;
+    mlca.feromoneDirectionChangeProbability = 0.001;
     
     mlca.automaton.changeProbs = function changeProbs (form) {
         
@@ -214,8 +214,8 @@ mlca.automaton.begin = function () {
             alert("Valor de probabilidade de seguir invalido, inserir número entre 0 e 1");   
         }
         else{
-            mlca.feromoneFollowingProbability = form.PSF.value;
-            document.getElementById("PSF").innerHTML = mlca.feromoneFollowingProbability;   
+            mlca.feromoneDirectionChangeProbability = form.PSF.value;
+            document.getElementById("PSF").innerHTML = mlca.feromoneDirectionChangeProbability;  
         }
         
         mlca.rulesetList.splice(0,mlca.rulesetList.length);
@@ -274,7 +274,7 @@ mlca.automaton.begin = function () {
         document.getElementById("lockstatus").innerHTML = " (LOCKED)";
     }
     document.getElementById("PMD").innerHTML = mlca.directionChangeProbability;
-    document.getElementById("PSF").innerHTML = mlca.feromoneFollowingProbability;
+    document.getElementById("PSF").innerHTML = mlca.feromoneDirectionChangeProbability;
         
 	mlca.directionChangeProbability = mlca.directionChangeProbability/2;
     
