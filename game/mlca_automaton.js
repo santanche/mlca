@@ -1,0 +1,321 @@
+/* Automaton
+
+   Monolithic iterator: access to all modules
+	
+	+begin(): initiate the ruleset list, most display parameters, the main loop
+	the list of layers, the neighborhood libraries and predefined rules and layers
+	
+	-draw(): draws the cells into the canvas, followed by the grid
+	
+	-iterate(): compute the next state of all layers
+*/
+
+mlca.automaton = {};
+
+mlca.automaton.begin = function () {
+    'use strict';
+    console.log("automaton.begin()");
+	
+    /*
+	  Initializations:
+    
+      i: index for 'for'
+      mlca.rulesetList: Array with rulesets to be applied
+    */
+
+    var i;
+    mlca.rulesetList = [];
+
+    /*
+	  Temp implementation for the SimpleCanvasDisplay
+	
+      this.play: Boolean to control auto-iterator
+      this.fps: Maximum animation frames per second
+      this.cellSize: size for the grid cells
+    */
+
+    if (mlca.fieldSize === undefined) {
+		mlca.fieldSize = {x: 100, y: 60};
+	}
+    this.play = false;
+    if (this.fps === undefined) {
+		this.fps = 10;
+	}
+    if (this.cellSize === undefined) { this.cellSize = 10; }
+    if (!this.displayInfo) {
+        this.displayInfo = {
+		    cellSize: this.cellSize,
+		    dimensions: mlca.fieldSize
+        };
+    }
+	document.getElementById("canvas").addEventListener('mousemove', function (event) {
+		document.getElementById("mousex").innerHTML = Math.floor(event.clientX / mlca.automaton.cellSize);
+		document.getElementById("mousey").innerHTML = Math.floor(event.clientY / mlca.automaton.cellSize);
+	}, false);
+	
+	
+    // Fix p/ multiplos event listeners
+    if (!this.display) { this.display = new mlca.SimpleCanvasDisplay(this.displayInfo); }
+
+	//End of temp implementation
+	
+    /*
+	  mlca.mainloop: Main loop. Calculates elapsed time since last frame
+	*/
+    
+	(function () {
+	    var curr = (new Date()).getTime(), last = 0, elaps = 0;
+	    mlca.mainloop = function () {
+            last = curr;
+            curr = (new Date()).getTime();
+            elaps += curr - last;
+            if (elaps > 1000 / mlca.automaton.fps) {
+                elaps = (curr - last) % (1000 / mlca.automaton.fps);
+                if (mlca.automaton.play) {
+                    mlca.automaton.iterate();
+                }
+	        }
+	        requestAnimationFrame(mlca.mainloop);
+	};
+    })();
+
+    /*
+	  mlca.layerList: array with layers
+    */
+	
+    mlca.layerList = [];
+    mlca.layerList.getLayerByID = function(layerID){
+	for ( i = 0; i < this.length; i += 1){
+	    if (this[i].id === layerID){
+		return this[i];
+	    }
+	}
+    };
+    
+    /*
+	  Libraries (possibly to be moved)
+    */
+	
+	mlca.kernels = {
+	self : new mlca.Kernel({
+	    relPosList:[{x:0,y:0}]
+	}),
+	ring8 : new mlca.Kernel({
+	    relPosList:[
+		{x:-1,y:-1},
+		{x:0,y:-1},
+		{x:1,y:-1},
+		{x:1,y:0},
+		{x:1,y:1},
+		{x:0,y:1},
+		{x:-1,y:1},
+		{x:-1,y:0}
+	    ]
+	})
+    };
+    
+    /*
+	  Rules: They state the conditions for cell change and the target state.
+	  TODO: implement stateToCount as a range of states (for countable data types),
+      and relative targetStates.
+	*/
+
+    mlca.layers = {
+	ants :
+	{
+	    dimensions: mlca.fieldSize,
+        visibility: true,
+	    type: 'integer',
+	   	    topology: 'xyloop',
+	    layerID: 'ants',
+	    DataStructure:mlca.WorstMatrix,
+	    defaultState:{state:0,attributes:[]},
+	    lock:false,
+        interfaceData:{
+		stateAlternate: function (s){
+            if(s.state == 0){
+                return {state:1, attributes:[0,true]};   
+            }
+            else if(s.attributes[0] < 7){
+                return {state:1, attributes:[s.attributes[0] + 1,true]};
+            }
+            else{
+                return {state:0};    
+            }
+        },
+		stateRepresentation: function (s){
+		    var ret;
+		    switch (s.state){
+		    case 1:
+			ret = 'red';
+			break;
+		    default:
+			ret = 'white';
+		    }
+		    return ret;
+		}// end stateRepresentation
+	    }// end interfaceData
+	},// end specs
+    pheromones :
+	{
+	    dimensions: mlca.fieldSize,
+        visibility: false,
+	    type: 'integer',
+	   	    topology: 'xyloop',
+	    layerID: 'pheromones',
+	    DataStructure:mlca.WorstMatrix,
+	    defaultState:{state:0,attributes:[]},
+        lock:false,
+	    interfaceData:{
+		stateAlternate: function (s){
+            if(s.state == 0){
+                return {state:1, attributes:[21]};   
+            }
+            else if(s.attributes[0] > 0){
+                return {state:1, attributes:[s.attributes[0] - 1]};
+            }
+            else{
+                return {state:0};    
+            }
+        },
+		stateRepresentation: function (s){
+		    var ret;
+		    switch (s.state){
+		    case 1:
+             var n = (s.attributes[0] + 1)/60 + 0.4;
+             ret = "rgba(255,255,0,"+n.toString()+")";
+			break;
+		    default:
+			 ret = "rgba(0,0,0,0.6)" ;
+		    }
+		    return ret;
+		}// end stateRepresentation
+	    }// end interfaceData
+	}// end specs    
+    };
+    
+    //Probability of changing direction
+    mlca.directionChangeProbability = 0.01;
+    mlca.feromoneDirectionChangeProbability = 0.001;
+    
+    mlca.automaton.changeProbs = function changeProbs (form) {
+        
+        mlca.automaton.play = false;
+        
+        if(form.PMD.value < 0 || form.PMD.value > 1 || form.PMD.value === undefined){
+            alert("Valor de probabilidade de mudança invalido, inserir número entre 0 e 1");   
+        }else{
+            mlca.directionChangeProbability = form.PMD.value;
+            document.getElementById("PMD").innerHTML = mlca.directionChangeProbability;  
+            mlca.directionChangeProbability = mlca.directionChangeProbability/2;
+        }
+        
+        if(form.PSF.value < 0 || form.PSF.value > 1 || form.PSF.value === undefined){
+            alert("Valor de probabilidade de seguir invalido, inserir número entre 0 e 1");   
+        }
+        else{
+            mlca.feromoneDirectionChangeProbability = form.PSF.value;
+            document.getElementById("PSF").innerHTML = mlca.feromoneDirectionChangeProbability;  
+        }
+        
+        mlca.rulesetList.splice(0,mlca.rulesetList.length);
+        
+        mlca.setRules();
+        
+        mlca.rulesetList.push(new mlca.Ruleset({
+        ruleList:mlca.rulelists.ants,
+        layerID:'ants'
+        }));
+        mlca.rulesetList.push(new mlca.Ruleset({
+        ruleList:mlca.rulelists.pheromones,
+        layerID:'pheromones'
+        }));
+
+
+    }
+    
+	//Interface prototype
+    
+	/*
+	  Initializations (will be done through the interface later)
+    */
+	
+    //Load the ruleSets and its rules and conditions
+	mlca.setRules();
+    
+    mlca.layerList.push(new mlca.Layer(mlca.layers.ants));
+    mlca.layerList.push(new mlca.Layer(mlca.layers.pheromones));
+    mlca.rulesetList.push(new mlca.Ruleset({
+	ruleList:mlca.rulelists.ants,
+	layerID:'ants'
+    }));
+    mlca.rulesetList.push(new mlca.Ruleset({
+	ruleList:mlca.rulelists.pheromones,
+	layerID:'pheromones'
+    }));
+
+
+  /*  //R-Pentamino :D
+    mlca.layerList[0].readFromString('011\n11\n010',
+				     function(n){
+					 switch (n){
+					 case '1':
+					     return true;
+					 default:
+					     return false;
+					 }
+				     },
+				     {x:10,y:10}
+				    );
+    *///End Interface prototype
+	
+    document.getElementById("selectedlayer").innerHTML = mlca.automaton.display.returnLayer().id;
+    if(mlca.automaton.display.returnLayer().lock){
+        document.getElementById("lockstatus").innerHTML = " (LOCKED)";
+    }
+    document.getElementById("PMD").innerHTML = mlca.directionChangeProbability;
+    document.getElementById("PSF").innerHTML = mlca.feromoneDirectionChangeProbability;
+        
+	mlca.directionChangeProbability = mlca.directionChangeProbability/2;
+    
+    this.draw();
+    mlca.mainloop();
+};
+
+/*
+  Draw: Draws background, then layers (from bottom to top), then grid.
+*/
+
+mlca.automaton.draw = function(){
+    'use strict';
+	var i;
+	this.display.drawBackground();
+	for (i = 0; i<mlca.layerList.length; i += 1){
+		this.display.drawLayer(mlca.layerList[i]);
+    }
+    this.display.drawGrid();
+};
+//DEBUG
+
+mlca.automaton.iterate = function() {
+    'use strict';
+    var i;
+    var it = {x:0,y:0};
+
+    // Execute Rulesets
+    for (i = 0; i<mlca.rulesetList.length; i+= 1){
+	for (it.x = 0; it.x<mlca.fieldSize.x; it.x += 1){
+	    for (it.y = 0; it.y<mlca.fieldSize.y; it.y += 1){
+		mlca.rulesetList[i].run(it);
+	    }
+	}
+    }
+
+    //Swap Matrixes
+    for (i = 0; i<mlca.layerList.length; i += 1){
+	mlca.layerList[i].swap();
+    }
+
+    //Draw Layers
+    this.draw();
+};
