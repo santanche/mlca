@@ -121,13 +121,13 @@ mlca.automaton.begin = function () {
 	*/
 
     mlca.layers = {
-	formigas :
+	ants :
 	{
 	    dimensions: mlca.fieldSize,
         visibility: true,
 	    type: 'integer',
 	   	    topology: 'xyloop',
-	    layerID: 'formigas',
+	    layerID: 'ants',
 	    DataStructure:mlca.WorstMatrix,
 	    defaultState:{state:0,attributes:[]},
 	    lock:false,
@@ -156,13 +156,13 @@ mlca.automaton.begin = function () {
 		}// end stateRepresentation
 	    }// end interfaceData
 	},// end specs
-    feromonios :
+    pheromones :
 	{
 	    dimensions: mlca.fieldSize,
         visibility: false,
 	    type: 'integer',
 	   	    topology: 'xyloop',
-	    layerID: 'feromonios',
+	    layerID: 'pheromones',
 	    DataStructure:mlca.WorstMatrix,
 	    defaultState:{state:0,attributes:[]},
         lock:false,
@@ -223,12 +223,12 @@ mlca.automaton.begin = function () {
         mlca.setRules();
         
         mlca.rulesetList.push(new mlca.Ruleset({
-        ruleList:mlca.rulelists.formigas,
-        layerID:'formigas'
+        ruleList:mlca.rulelists.ants,
+        layerID:'ants'
         }));
         mlca.rulesetList.push(new mlca.Ruleset({
-        ruleList:mlca.rulelists.feromonios,
-        layerID:'feromonios'
+        ruleList:mlca.rulelists.pheromones,
+        layerID:'pheromones'
         }));
 
 
@@ -243,15 +243,15 @@ mlca.automaton.begin = function () {
     //Load the ruleSets and its rules and conditions
 	mlca.setRules();
     
-    mlca.layerList.push(new mlca.Layer(mlca.layers.formigas));
-    mlca.layerList.push(new mlca.Layer(mlca.layers.feromonios));
+    mlca.layerList.push(new mlca.Layer(mlca.layers.ants));
+    mlca.layerList.push(new mlca.Layer(mlca.layers.pheromones));
     mlca.rulesetList.push(new mlca.Ruleset({
-	ruleList:mlca.rulelists.formigas,
-	layerID:'formigas'
+	ruleList:mlca.rulelists.ants,
+	layerID:'ants'
     }));
     mlca.rulesetList.push(new mlca.Ruleset({
-	ruleList:mlca.rulelists.feromonios,
-	layerID:'feromonios'
+	ruleList:mlca.rulelists.pheromones,
+	layerID:'pheromones'
     }));
 
 
